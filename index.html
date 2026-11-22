@@ -5,40 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#173D2E">
 <title>INSIGHT DAY · 잔향</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --green:#173D2E; --green2:#21543F; --red:#B3262E; --red2:#8E1C23;
-  --gold:#C9A66B; --cream:#F7F2E8; --paper:#FFFCF6;
-  --ink:#1D2A22; --muted:#6C7168; --line:#E3D9C6;
+  --green:#173D2E; --red:#B3262E; --red2:#8E1C23; --gold:#C9A66B;
+  --cream:#F7F2E8; --paper:#FFFCF6; --ink:#1D2A22; --muted:#6C7168; --line:#E3D9C6;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;background:var(--green);
   font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Malgun Gothic","맑은 고딕",sans-serif;
   color:var(--ink);word-break:keep-all;-webkit-font-smoothing:antialiased}
 button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
+.hand{font-family:"Gaegu","Nanum Pen Script",cursive}
 
 /* ---------- 봉투 ---------- */
 #intro{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;
-  background:radial-gradient(120% 80% at 50% 40%,#22553F 0%,#173D2E 60%,#0F2A1F 100%);
-  transition:opacity .7s ease;z-index:10}
+  background:radial-gradient(120% 80% at 50% 40%,#22553F 0%,#173D2E 60%,#0F2A1F 100%);transition:opacity .7s ease;z-index:10}
 #intro.gone{opacity:0;pointer-events:none}
-.snow{position:absolute;top:-10px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.75);animation:fall linear infinite}
+.snow{position:absolute;top:-10px;border-radius:50%;background:rgba(255,255,255,.75);animation:fall linear infinite}
 @keyframes fall{to{transform:translate3d(20px,110vh,0)}}
 .to{color:var(--gold);font-size:13px;letter-spacing:5px;margin-bottom:34px;font-weight:700;position:relative}
 .envelope{position:relative;width:min(78vw,320px);aspect-ratio:3/2;perspective:900px;cursor:pointer}
 .env-back{position:absolute;inset:0;background:var(--red2);border-radius:6px}
-.letter{position:absolute;left:6%;right:6%;top:6%;height:88%;background:var(--paper);border-radius:4px;
-  z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  box-shadow:0 2px 8px rgba(0,0,0,.15);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.letter{position:absolute;left:6%;right:6%;top:6%;height:88%;background:var(--paper);border-radius:4px;z-index:2;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);
+  transition:transform .9s cubic-bezier(.2,.8,.2,1)}
 .letter small{font-size:10px;letter-spacing:4px;color:var(--green);font-weight:700}
 .letter b{font-size:30px;color:var(--red);margin-top:4px}
-.env-front{position:absolute;inset:0;z-index:3;border-radius:6px;background:var(--red);
-  clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%)}
-.flap{position:absolute;inset:0;z-index:4;background:#C3343B;border-radius:6px 6px 0 0;
-  clip-path:polygon(0 0,100% 0,50% 60%);transform-origin:top center;transition:transform .7s cubic-bezier(.4,0,.2,1)}
+.env-front{position:absolute;inset:0;z-index:3;border-radius:6px;background:var(--red);clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%)}
+.flap{position:absolute;inset:0;z-index:4;background:#C3343B;border-radius:6px 6px 0 0;clip-path:polygon(0 0,100% 0,50% 60%);
+  transform-origin:top center;transition:transform .7s cubic-bezier(.4,0,.2,1)}
 .seal{position:absolute;left:50%;top:60%;width:48px;height:48px;margin:-24px 0 0 -24px;z-index:5;border-radius:50%;
-  background:var(--gold);color:var(--green);display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:17px;box-shadow:0 2px 6px rgba(0,0,0,.3),inset 0 0 0 3px rgba(255,255,255,.25);transition:opacity .3s,transform .3s}
+  background:var(--gold);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;
+  box-shadow:0 2px 6px rgba(0,0,0,.3),inset 0 0 0 3px rgba(255,255,255,.25);transition:opacity .3s,transform .3s}
 .hint{margin-top:36px;color:#D8C9A8;font-size:14px;animation:blink 1.8s ease-in-out infinite;position:relative}
 @keyframes blink{50%{opacity:.35}}
 .envelope.open .seal{opacity:0;transform:scale(.6)}
@@ -50,25 +51,27 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
 /* ---------- 카드 ---------- */
 #deck{position:fixed;inset:0;background:var(--cream);opacity:0;transition:opacity .7s ease}
 #deck.show{opacity:1}
-.frame{position:absolute;inset:12px;border:2px solid var(--green);border-radius:6px;pointer-events:none}
+.frame{position:absolute;inset:12px;border:2px solid var(--green);border-radius:6px;pointer-events:none;z-index:4}
 .frame::after{content:"";position:absolute;inset:4px;border:1px solid var(--red);border-radius:3px;opacity:.55}
-.progress{position:absolute;top:calc(30px + env(safe-area-inset-top));left:34px;right:34px;display:flex;gap:5px;z-index:3}
-.progress i{flex:1;height:3px;background:#E3D9C6;border-radius:2px;overflow:hidden;position:relative}
+.progress{position:absolute;top:calc(30px + env(safe-area-inset-top));left:34px;right:34px;display:flex;gap:4px;z-index:3}
+.progress i{flex:1;height:3px;background:#E3D9C6;border-radius:2px;position:relative;overflow:hidden}
 .progress i.on::after{content:"";position:absolute;inset:0;background:var(--red)}
 
 .slides{position:absolute;inset:0}
-.slide{position:absolute;inset:0;padding:calc(78px + env(safe-area-inset-top)) 36px calc(112px + env(safe-area-inset-bottom));
-  display:flex;flex-direction:column;justify-content:center;
-  opacity:0;transform:translateX(24px);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
-.slide.active{opacity:1;transform:none;pointer-events:auto}
+.slide{position:absolute;inset:0;padding:calc(56px + env(safe-area-inset-top)) 34px calc(104px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  opacity:0;visibility:hidden;transform:translateX(24px);transition:opacity .5s ease,transform .5s ease,visibility 0s .5s}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .5s ease,transform .5s ease}
 .slide.prev{transform:translateX(-24px)}
-.slide > *{opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
-.slide.active > *{opacity:1;transform:none}
-.slide.active > *:nth-child(2){transition-delay:.1s}
-.slide.active > *:nth-child(3){transition-delay:.2s}
-.slide.active > *:nth-child(4){transition-delay:.3s}
-.slide.active > *:nth-child(5){transition-delay:.4s}
-.slide.active > *:nth-child(6){transition-delay:.5s}
+.in{margin:auto 0;width:100%}
+.in > *{opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+.slide.active .in > *{opacity:1;transform:none}
+.slide.active .in > *:nth-child(2){transition-delay:.08s}
+.slide.active .in > *:nth-child(3){transition-delay:.16s}
+.slide.active .in > *:nth-child(4){transition-delay:.24s}
+.slide.active .in > *:nth-child(5){transition-delay:.32s}
+.slide.active .in > *:nth-child(6){transition-delay:.4s}
+.slide.active .in > *:nth-child(7){transition-delay:.48s}
 
 .eyebrow{font-size:12px;letter-spacing:5px;color:var(--red);font-weight:800}
 .lead{font-size:19px;color:#4C5149;margin-top:22px}
@@ -77,49 +80,89 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
 .meta{margin-top:28px;padding-top:22px;border-top:1px solid var(--line);font-size:15px;color:var(--muted);line-height:1.8}
 .meta b{color:var(--red)}
 
-.msg{font-size:22px;line-height:1.7;font-weight:700;margin-top:20px}
-.msg em{font-style:normal;color:var(--red)}
-.sub{font-size:15px;color:var(--muted);line-height:1.8;margin-top:18px}
-.flow{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px}
-.flow span{font-size:13.5px;font-weight:700;padding:7px 12px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--green)}
-.flow span:nth-child(even){color:var(--red)}
+.msg{font-size:23px;line-height:1.6;font-weight:800;margin-top:18px}
+.sub{font-size:15.5px;color:var(--muted);line-height:1.8;margin-top:16px}
+.notice{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:15.5px;line-height:1.6}
+.notice b{color:var(--red)}
+.sched{margin-top:20px;border-top:1px solid var(--line)}
+.sched div{display:flex;gap:16px;padding:11px 2px;border-bottom:1px dashed var(--line);font-size:15.5px}
+.sched span{width:46px;flex:none;color:var(--red);font-weight:800;font-variant-numeric:tabular-nums}
 
-/* 시간 슬라이드 */
+/* 콘텐츠 */
 .top{display:flex;align-items:center;justify-content:space-between}
 .step{font-size:12.5px;color:var(--muted);letter-spacing:2px;font-weight:700}
-.chip{font-size:12px;font-weight:700;color:#fff;background:var(--green);padding:5px 10px;border-radius:20px}
-.time{font-size:50px;font-weight:800;color:var(--red);letter-spacing:-1px;margin-top:12px;font-variant-numeric:tabular-nums;line-height:1}
-.act{font-size:32px;font-weight:800;color:var(--green);margin-top:12px;letter-spacing:-.5px}
-.phrase{font-size:17px;color:#5A5F57;margin-top:8px}
-.box{margin-top:26px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px 18px}
-.box li{list-style:none;position:relative;padding:13px 0 13px 19px;font-size:15.5px;line-height:1.55;border-bottom:1px dashed var(--line)}
-.box li:last-child{border-bottom:0}
-.box li::before{content:"";position:absolute;left:0;top:21px;width:7px;height:7px;border-radius:50%;background:var(--red)}
-.box li:nth-child(even)::before{background:var(--green)}
-.box b{color:var(--green)}
+.time{font-size:46px;font-weight:800;color:var(--red);letter-spacing:-1px;margin-top:8px;font-variant-numeric:tabular-nums;line-height:1}
+.act{font-size:30px;font-weight:800;color:var(--green);margin-top:10px;letter-spacing:-.5px}
+.desc{font-size:15.5px;color:#4C5149;margin-top:8px;line-height:1.6}
+.art{margin-top:14px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:10px 10px 16px;text-align:center}
+.art svg{width:100%;height:auto;max-height:30vh;display:block;margin:0 auto}
+.scent{font-size:21px;line-height:1.35;color:#3E4A3F;margin-top:4px}
+.scent b{display:block;font-size:30px;color:var(--red);font-weight:700}
 
-.restart{margin-top:30px;align-self:flex-start;font-size:14px;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:2px}
+/* 감상 */
+.q{font-size:24px;font-weight:800;line-height:1.45;margin-top:14px}
+.field{margin-top:18px}
+.field label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:6px}
+.field input,.field textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;outline:none;transition:border-color .2s}
+.field textarea{min-height:120px;resize:none;line-height:1.6}
+.field input:focus,.field textarea:focus{border-color:var(--green)}
+.save{margin-top:14px;width:100%;height:50px;border-radius:12px;background:var(--green);color:#fff;font-weight:800;font-size:16px;transition:opacity .2s,transform .1s}
+.save:active{transform:scale(.98)}
+.save:disabled{opacity:.5}
+.status{min-height:22px;margin-top:10px;font-size:14px;color:var(--muted);text-align:center}
+.status.ok{color:var(--green);font-weight:700}
+.status.err{color:var(--red)}
+.mine{margin-top:6px}
+.mine p{font-size:14.5px;background:#fff;border-left:3px solid var(--gold);padding:9px 12px;margin-top:8px;border-radius:4px;line-height:1.55;white-space:pre-wrap}
 
-/* 내비게이션 */
-.nav{position:absolute;left:28px;right:28px;bottom:calc(28px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;z-index:3}
+/* 롤링페이퍼 */
+.board{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.note{padding:12px 12px 10px;border-radius:3px;box-shadow:0 3px 8px rgba(0,0,0,.08);font-size:20px;line-height:1.3;white-space:pre-wrap;word-break:break-word}
+.note:nth-child(3n+1){transform:rotate(-1.6deg)}
+.note:nth-child(3n+2){transform:rotate(1.2deg)}
+.note:nth-child(3n){transform:rotate(-.6deg)}
+.note .tag{display:inline-block;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:11px;font-weight:800;margin-bottom:6px;opacity:.75}
+.note .by{display:block;text-align:right;font-size:17px;margin-top:6px;opacity:.8}
+.note.boardgame{background:#E3EEDF}.note.perfume{background:#F6EBC8}.note.dejavu{background:#F6E1E1}
+.note.dinner{background:#F3D9CF}.note.tea{background:#DDEBE6}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);font-size:15px;padding:30px 0}
+.refresh{margin-top:16px;font-size:14px;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:2px}
+
+/* 내비 */
+.nav{position:absolute;left:28px;right:28px;bottom:calc(26px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;z-index:5}
 .nav button{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
 .nav .next{background:var(--red);color:#fff;box-shadow:0 3px 10px rgba(179,38,46,.3)}
-.nav .prev{border:1.5px solid #CFC3AC;color:var(--green)}
+.nav .prev{border:1.5px solid #CFC3AC;color:var(--green);background:var(--cream)}
 .nav button:disabled{opacity:0;pointer-events:none}
 .nav svg{width:20px;height:20px}
 .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:1px}
+.navbg{position:absolute;left:14px;right:14px;bottom:14px;height:calc(92px + env(safe-area-inset-bottom));background:linear-gradient(rgba(247,242,232,0),var(--cream) 40%);z-index:4;pointer-events:none}
 
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{transition-duration:.01ms !important;animation:none !important}
-  .snow{display:none}
-}
-@media (max-height:700px){
-  .title{font-size:58px}.time{font-size:40px}.act{font-size:26px}.msg{font-size:19px}
-  .box{margin-top:18px}.box li{padding:10px 0;font-size:14.5px}
-}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms !important;animation:none !important}.snow{display:none}}
+@media (max-height:700px){.title{font-size:58px}.time{font-size:38px}.act{font-size:25px}.art svg{max-height:24vh}.scent{font-size:18px}.scent b{font-size:25px}}
 </style>
 </head>
 <body>
+
+<!-- 공용 필터 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="wc" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feGaussianBlur in="d" stdDeviation="0.7"/>
+    </filter>
+    <filter id="wash" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="4" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="22" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feGaussianBlur in="d" stdDeviation="2.2"/>
+    </filter>
+    <filter id="pen" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="2" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
 
 <section id="intro">
   <div class="to">TO. 우리 팀</div>
@@ -138,107 +181,281 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
   <div class="progress" id="progress"></div>
 
   <div class="slides" id="slides">
+
     <!-- 표지 -->
-    <section class="slide">
+    <section class="slide"><div class="in">
       <div class="eyebrow">INSIGHT DAY</div>
       <div class="lead">오늘 하루가 우리에게 남길 것,</div>
       <div class="title">잔향<span class="dot">.</span></div>
-      <div class="meta"><b>12월 4일 금요일, 오늘</b><br>13:15 출발 · 저녁까지 함께해요</div>
-    </section>
+      <div class="meta"><b>12월 4일 금요일</b><br>13:15 출발 · 저녁까지 함께해요</div>
+    </div></section>
 
-    <!-- 초대 -->
-    <section class="slide">
-      <div class="eyebrow">INVITATION</div>
-      <p class="msg">오늘, 인사이트 데이에<br>여러분을 초대합니다.</p>
-      <p class="sub">어디로 가는지는 도착할 때까지 비밀이에요.<br>오늘 무엇을 하는지만 미리 알려드릴게요.</p>
-      <div class="flow"><span>보드게임</span><span>향수 공방</span><span>사진</span><span>저녁</span><span>카페</span></div>
-    </section>
+    <!-- 안내 -->
+    <section class="slide"><div class="in">
+      <div class="eyebrow">TODAY</div>
+      <p class="msg">오늘은 이렇게 보내요</p>
+      <div class="sched">
+        <div><span>13:30</span>보드게임</div>
+        <div><span>15:45</span>향수 만들기</div>
+        <div><span>17:15</span>데자뷰 네컷</div>
+        <div><span>18:00</span>저녁식사</div>
+        <div><span>19:15</span>따뜻한 차 한 잔</div>
+      </div>
+      <div class="notice">장소는 <b>매니저의 안내</b>에 따라주세요:)</div>
+      <p class="sub">하나 끝날 때마다 짧게 감상을 남겨 주세요.<br>마지막에 다 같이 모아서 봐요.</p>
+    </div></section>
 
-    <!-- 01 출발 -->
-    <section class="slide">
-      <div class="top"><span class="step">01 — 06</span><span class="chip">이동</span></div>
+    <!-- 출발 -->
+    <section class="slide"><div class="in">
+      <div class="top"><span class="step">01 / 06</span></div>
       <div class="time">13:15</div>
       <div class="act">출발</div>
-      <div class="phrase">설렘을 챙겨 출발</div>
-      <ul class="box">
-        <li>목장 모임이 끝나면 다 같이 바로 출발해요</li>
-        <li>목적지는 도착하면 알 수 있어요</li>
-        <li>이동하는 길도 사진으로 남겨요</li>
-      </ul>
-    </section>
+      <p class="desc">목장 모임 끝나면 바로 출발해요.</p>
+      <div class="notice">어디로 가는지는 <b>매니저만</b> 알아요.<br>잘 따라와 주세요:)</div>
+    </div></section>
 
-    <!-- 02 보드게임 -->
-    <section class="slide">
-      <div class="top"><span class="step">02 — 06</span><span class="chip">약 2시간</span></div>
+    <!-- 보드게임 -->
+    <section class="slide"><div class="in">
+      <div class="top"><span class="step">02 / 06</span></div>
       <div class="time">13:30</div>
       <div class="act">보드게임</div>
-      <div class="phrase">머리를 맞대고, 때로는 맞서고</div>
-      <ul class="box">
-        <li>다섯 명 모두가 각자 겨루는 <b>개인전</b></li>
-        <li>바퀴벌레 포커, 젠가, 할리갈리 등</li>
-        <li>전략은 각자, 웃음은 다 같이</li>
-      </ul>
-    </section>
+      <p class="desc">다섯 명이 각자 붙는 개인전이에요.</p>
+      <div class="art">
+        <svg viewBox="0 0 280 200" role="img" aria-label="주사위와 로즈마리 그림">
+          <ellipse cx="140" cy="112" rx="122" ry="72" fill="#E2ECDD" filter="url(#wash)"/>
+          <g filter="url(#wc)">
+            <rect x="62" y="88" width="64" height="64" rx="11" fill="#FBF6EC" transform="rotate(-12 94 120)"/>
+            <rect x="142" y="104" width="54" height="54" rx="10" fill="#F6E3E1" transform="rotate(14 169 131)"/>
+          </g>
+          <g filter="url(#pen)" fill="none" stroke="#3B3A36" stroke-width="1.6">
+            <rect x="62" y="88" width="64" height="64" rx="11" transform="rotate(-12 94 120)"/>
+            <rect x="142" y="104" width="54" height="54" rx="10" transform="rotate(14 169 131)"/>
+          </g>
+          <g transform="rotate(-12 94 120)" fill="#B3262E" filter="url(#wc)">
+            <circle cx="78" cy="104" r="5"/><circle cx="94" cy="120" r="5"/><circle cx="110" cy="136" r="5"/>
+          </g>
+          <g transform="rotate(14 169 131)" fill="#2F5E46" filter="url(#wc)">
+            <circle cx="156" cy="118" r="4.5"/><circle cx="182" cy="118" r="4.5"/><circle cx="156" cy="144" r="4.5"/><circle cx="182" cy="144" r="4.5"/>
+          </g>
+          <path class="sprig" d="M38 182 C 90 150, 150 92, 236 34" fill="none" stroke="#6B5A3A" stroke-width="2.4" filter="url(#pen)" data-color="#6E8048" data-count="26"/>
+        </svg>
+        <p class="scent hand">생각은 또렷하게, 마음은 하나로 모이는<b>로즈마리 향</b></p>
+      </div>
+    </div></section>
 
-    <!-- 03 향수 공방 -->
-    <section class="slide">
-      <div class="top"><span class="step">03 — 06</span><span class="chip">약 1시간 30분</span></div>
+    <!-- 보드게임 감상 -->
+    <section class="slide" data-stage="boardgame"><div class="in">
+      <div class="eyebrow">NOTE</div>
+      <p class="q">보드게임 어땠어요?</p>
+      <p class="sub">한 줄이어도 좋아요. 마지막 장에서 다 같이 봐요.</p>
+      <div class="field"><label>이름</label><input class="who" maxlength="20" placeholder="이름을 적어 주세요" autocomplete="off"></div>
+      <div class="field"><label>감상</label><textarea class="body" maxlength="500" placeholder="오늘의 승자는…"></textarea></div>
+      <button class="save">남기기</button>
+      <p class="status"></p>
+      <div class="mine"></div>
+    </div></section>
+
+    <!-- 향수 만들기 -->
+    <section class="slide"><div class="in">
+      <div class="top"><span class="step">03 / 06</span></div>
       <div class="time">15:45</div>
-      <div class="act">향수 공방</div>
-      <div class="phrase">오늘을 오래 남길 무언가를 만들어요</div>
-      <ul class="box">
-        <li>여러 향을 맡아 보고 골라 <b>나만의 향수</b>를 직접 만들어요</li>
-        <li>사람은 향으로 기억된다고 하죠</li>
-        <li>오늘의 키워드 ‘잔향’이 여기서 시작돼요</li>
-      </ul>
-    </section>
+      <div class="act">향수 만들기</div>
+      <p class="desc">각자 고른 향으로 나만의 향수를 만들어요.</p>
+      <div class="art">
+        <svg viewBox="0 0 280 200" role="img" aria-label="향수병과 베르가못 그림">
+          <ellipse cx="140" cy="114" rx="122" ry="72" fill="#F4EAC9" filter="url(#wash)"/>
+          <g filter="url(#wc)">
+            <rect x="96" y="76" width="90" height="100" rx="20" fill="#F1E6C4" opacity=".9"/>
+            <path d="M99 120 H183 V156 Q183 174 165 174 H117 Q99 174 99 156 Z" fill="#E6BE5A" opacity=".75"/>
+            <rect x="126" y="58" width="30" height="22" fill="#EFE3BF"/>
+            <rect x="118" y="32" width="46" height="30" rx="7" fill="#B3262E"/>
+            <circle cx="222" cy="158" r="28" fill="#B9C95A"/>
+            <circle cx="62" cy="160" r="25" fill="#F2E487"/>
+            <path d="M226 130 q18 -22 34 -14 q-12 18 -34 14z" fill="#5E7F3A"/>
+          </g>
+          <g filter="url(#pen)" fill="none" stroke="#3B3A36" stroke-width="1.6">
+            <rect x="96" y="76" width="90" height="100" rx="20"/>
+            <rect x="126" y="58" width="30" height="20"/>
+            <rect x="118" y="32" width="46" height="30" rx="7"/>
+            <circle cx="222" cy="158" r="28"/>
+            <circle cx="62" cy="160" r="25"/><circle cx="62" cy="160" r="19"/>
+            <path d="M62 141 V179 M43 160 H81 M49 147 L75 173 M75 147 L49 173" stroke-width="1"/>
+            <path d="M226 130 q18 -22 34 -14 q-12 18 -34 14z"/>
+            <path d="M110 98 q6 -10 14 -12" stroke="#fff" stroke-width="3" opacity=".8"/>
+          </g>
+          <rect x="114" y="100" width="54" height="26" rx="3" fill="#FFFCF6" filter="url(#wc)"/>
+          <text x="141" y="118" text-anchor="middle" font-family="Gaegu, cursive" font-size="15" fill="#8E1C23" font-weight="700">잔향</text>
+        </svg>
+        <p class="scent hand">처음 맡아도 오래 기억에 남는<b>베르가못 향</b></p>
+      </div>
+    </div></section>
 
-    <!-- 04 사진 -->
-    <section class="slide">
-      <div class="top"><span class="step">04 — 06</span><span class="chip">약 30분</span></div>
+    <!-- 향수 감상 -->
+    <section class="slide" data-stage="perfume"><div class="in">
+      <div class="eyebrow">NOTE</div>
+      <p class="q">내가 만든 향, 어떤 향이에요?</p>
+      <p class="sub">이름을 붙였다면 그것도 같이 적어 주세요.</p>
+      <div class="field"><label>이름</label><input class="who" maxlength="20" placeholder="이름을 적어 주세요" autocomplete="off"></div>
+      <div class="field"><label>감상</label><textarea class="body" maxlength="500" placeholder="제 향수 이름은…"></textarea></div>
+      <button class="save">남기기</button>
+      <p class="status"></p>
+      <div class="mine"></div>
+    </div></section>
+
+    <!-- 데자뷰 네컷 -->
+    <section class="slide"><div class="in">
+      <div class="top"><span class="step">04 / 06</span></div>
       <div class="time">17:15</div>
-      <div class="act">사진</div>
-      <div class="phrase">지금 이 모습 그대로</div>
-      <ul class="box">
-        <li>방금 만든 향수를 들고 <b>다 같이 한 장</b></li>
-        <li>오늘의 우리를 사진으로 남겨요</li>
-      </ul>
-    </section>
+      <div class="act">데자뷰 네컷</div>
+      <p class="desc">만든 향수 들고 다 같이 네컷 찍어요.</p>
+      <div class="art">
+        <svg viewBox="0 0 280 200" role="img" aria-label="네컷 사진과 목화 그림">
+          <ellipse cx="140" cy="108" rx="122" ry="74" fill="#F3E2E0" filter="url(#wash)"/>
+          <g transform="rotate(-6 140 104)">
+            <rect x="104" y="14" width="72" height="180" rx="4" fill="#FFFFFF" filter="url(#wc)"/>
+            <g filter="url(#wc)">
+              <rect x="111" y="21" width="58" height="36" fill="#E9D8C8"/>
+              <rect x="111" y="62" width="58" height="36" fill="#DDE7DA"/>
+              <rect x="111" y="103" width="58" height="36" fill="#F2D6D6"/>
+              <rect x="111" y="144" width="58" height="36" fill="#E2E2EE"/>
+            </g>
+            <g fill="#3B3A36" opacity=".55" filter="url(#wc)">
+              <circle cx="126" cy="37" r="5"/><circle cx="140" cy="35" r="5"/><circle cx="154" cy="38" r="5"/>
+              <circle cx="130" cy="78" r="5"/><circle cx="150" cy="76" r="5"/>
+              <circle cx="122" cy="119" r="5"/><circle cx="136" cy="117" r="5"/><circle cx="150" cy="120" r="5"/><circle cx="160" cy="116" r="4"/>
+              <circle cx="140" cy="160" r="5"/>
+            </g>
+            <g filter="url(#pen)" fill="none" stroke="#3B3A36" stroke-width="1.4">
+              <rect x="104" y="14" width="72" height="180" rx="4"/>
+              <rect x="111" y="21" width="58" height="36"/><rect x="111" y="62" width="58" height="36"/>
+              <rect x="111" y="103" width="58" height="36"/><rect x="111" y="144" width="58" height="36"/>
+            </g>
+            <text x="140" y="191" text-anchor="middle" font-family="Gaegu, cursive" font-size="8" fill="#8E1C23">2026.12.04</text>
+          </g>
+          <g class="cotton" data-x="58" data-y="134"></g>
+          <g class="cotton" data-x="224" data-y="116"></g>
+          <g class="cotton" data-x="232" data-y="168" data-s=".7"></g>
+        </svg>
+        <p class="scent hand">언젠가 본 것 같은 장면처럼 포근한<b>코튼 향</b></p>
+      </div>
+    </div></section>
 
-    <!-- 05 저녁 -->
-    <section class="slide">
-      <div class="top"><span class="step">05 — 06</span><span class="chip">약 1시간 15분</span></div>
+    <!-- 네컷 감상 -->
+    <section class="slide" data-stage="dejavu"><div class="in">
+      <div class="eyebrow">NOTE</div>
+      <p class="q">사진 찍을 때 무슨 일이 있었나요?</p>
+      <p class="sub">제일 웃겼던 컷, 아쉬웠던 컷 뭐든 좋아요.</p>
+      <div class="field"><label>이름</label><input class="who" maxlength="20" placeholder="이름을 적어 주세요" autocomplete="off"></div>
+      <div class="field"><label>감상</label><textarea class="body" maxlength="500" placeholder="세 번째 컷에서…"></textarea></div>
+      <button class="save">남기기</button>
+      <p class="status"></p>
+      <div class="mine"></div>
+    </div></section>
+
+    <!-- 저녁식사 -->
+    <section class="slide"><div class="in">
+      <div class="top"><span class="step">05 / 06</span></div>
       <div class="time">18:00</div>
-      <div class="act">저녁</div>
-      <div class="phrase">한 테이블에 둘러앉아</div>
-      <ul class="box">
-        <li>메뉴는 <b>닭갈비</b>, 마무리는 볶음밥</li>
-        <li>오늘 하루 이야기를 나누며 든든하게</li>
-      </ul>
-    </section>
+      <div class="act">저녁식사</div>
+      <p class="desc">한 테이블에 둘러앉아 저녁 먹어요.</p>
+      <div class="art">
+        <svg viewBox="0 0 280 200" role="img" aria-label="시나몬 스틱과 호랑가시나무 그림">
+          <ellipse cx="140" cy="112" rx="122" ry="72" fill="#F3DFD3" filter="url(#wash)"/>
+          <g filter="url(#wc)">
+            <rect x="52" y="104" width="172" height="20" rx="10" fill="#A8653E" transform="rotate(-10 138 114)"/>
+            <rect x="58" y="122" width="170" height="20" rx="10" fill="#B87449" transform="rotate(-4 143 132)"/>
+            <rect x="50" y="138" width="168" height="20" rx="10" fill="#9C5A35" transform="rotate(-14 134 148)"/>
+          </g>
+          <g filter="url(#pen)" fill="none" stroke="#3B3A36" stroke-width="1.4">
+            <rect x="52" y="104" width="172" height="20" rx="10" transform="rotate(-10 138 114)"/>
+            <rect x="58" y="122" width="170" height="20" rx="10" transform="rotate(-4 143 132)"/>
+            <rect x="50" y="138" width="168" height="20" rx="10" transform="rotate(-14 134 148)"/>
+            <path d="M66 112 q-4 6 2 10 M70 130 q-4 6 2 10 M62 150 q-4 6 2 10" stroke="#5A3420"/>
+          </g>
+          <g filter="url(#wc)">
+            <rect x="128" y="96" width="16" height="70" rx="3" fill="#B3262E" transform="rotate(-8 136 131)"/>
+            <path d="M136 100 q-30 -34 -44 -12 q10 18 44 12z" fill="#C3343B"/>
+            <path d="M136 100 q26 -38 44 -16 q-12 20 -44 16z" fill="#C3343B"/>
+            <path d="M190 52 q14 -10 24 0 q8 -6 16 2 q-4 10 4 16 q-10 4 -12 14 q-10 -6 -18 2 q-2 -10 -14 -12 q6 -10 0 -22z" fill="#3E7550"/>
+            <path d="M172 72 q10 -14 22 -6 q6 -8 16 -2 q-6 10 0 18 q-12 0 -14 12 q-8 -8 -18 -2 q2 -12 -6 -20z" fill="#2F5E46"/>
+            <circle cx="200" cy="80" r="6" fill="#C0272F"/><circle cx="210" cy="74" r="5.5" fill="#D23A41"/><circle cx="206" cy="86" r="5" fill="#A71F27"/>
+          </g>
+          <g filter="url(#pen)" fill="none" stroke="#3B3A36" stroke-width="1.3">
+            <path d="M136 100 q-30 -34 -44 -12 q10 18 44 12z"/>
+            <path d="M136 100 q26 -38 44 -16 q-12 20 -44 16z"/>
+          </g>
+        </svg>
+        <p class="scent hand">추운 날 몸을 데워 주는<b>시나몬 향</b></p>
+      </div>
+    </div></section>
 
-    <!-- 06 카페 -->
-    <section class="slide">
-      <div class="top"><span class="step">06 — 06</span><span class="chip">~ 20:00</span></div>
+    <!-- 저녁 감상 -->
+    <section class="slide" data-stage="dinner"><div class="in">
+      <div class="eyebrow">NOTE</div>
+      <p class="q">저녁 먹으면서 나온 얘기 중에 기억에 남는 거?</p>
+      <p class="sub">맛 평가도 환영이에요.</p>
+      <div class="field"><label>이름</label><input class="who" maxlength="20" placeholder="이름을 적어 주세요" autocomplete="off"></div>
+      <div class="field"><label>감상</label><textarea class="body" maxlength="500" placeholder="오늘 저녁은…"></textarea></div>
+      <button class="save">남기기</button>
+      <p class="status"></p>
+      <div class="mine"></div>
+    </div></section>
+
+    <!-- 따뜻한 차 한 잔 -->
+    <section class="slide"><div class="in">
+      <div class="top"><span class="step">06 / 06</span></div>
       <div class="time">19:15</div>
-      <div class="act">카페</div>
-      <div class="phrase">천천히, 오늘을 마무리하며</div>
-      <ul class="box">
-        <li>따뜻한 음료 한 잔과 함께</li>
-        <li>오늘 가장 기억에 남는 순간 나누기</li>
-        <li>19:30 ~ 20:00 사이에 마무리해요</li>
-      </ul>
-    </section>
+      <div class="act">따뜻한 차 한 잔</div>
+      <p class="desc">차 한 잔 마시면서 오늘 얘기 나눠요.</p>
+      <div class="art">
+        <svg viewBox="0 0 280 200" role="img" aria-label="찻잔 그림">
+          <ellipse cx="140" cy="112" rx="122" ry="72" fill="#E1EDE6" filter="url(#wash)"/>
+          <g filter="url(#wc)">
+            <ellipse cx="140" cy="168" rx="104" ry="20" fill="#FBF7EE"/>
+            <path d="M80 96 Q82 162 140 164 Q198 162 200 96 Z" fill="#CFE5DA"/>
+            <ellipse cx="140" cy="96" rx="60" ry="12" fill="#F6F1E7"/>
+            <ellipse cx="140" cy="97" rx="52" ry="8" fill="#A86A3C"/>
+            <circle cx="112" cy="128" r="9" fill="#D9707A" opacity=".85"/><circle cx="122" cy="134" r="6" fill="#E59AA0" opacity=".85"/>
+            <circle cx="170" cy="138" r="8" fill="#D9707A" opacity=".85"/>
+            <path d="M104 136 q-6 6 -12 4 M178 146 q8 4 12 0" stroke="#5E8F67" stroke-width="3" fill="none"/>
+            <rect x="214" y="132" width="18" height="22" rx="2" fill="#B3262E" transform="rotate(10 223 143)"/>
+          </g>
+          <g filter="url(#pen)" fill="none" stroke="#3B3A36" stroke-width="1.5">
+            <ellipse cx="140" cy="168" rx="104" ry="20"/><ellipse cx="140" cy="166" rx="56" ry="9"/>
+            <path d="M80 96 Q82 162 140 164 Q198 162 200 96"/>
+            <ellipse cx="140" cy="96" rx="60" ry="12"/>
+            <path d="M199 108 q30 -4 28 20 q-2 20 -34 22" stroke-width="2"/>
+            <path d="M176 100 q20 6 26 30 L222 134" stroke-width="1" stroke="#8a7a6a"/>
+            <path d="M118 80 q-10 -14 2 -26 q10 -12 0 -26 M140 76 q-10 -14 2 -26 q10 -12 0 -26 M162 80 q-10 -14 2 -26 q10 -12 0 -26" stroke="#B8A99A" stroke-width="2" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <p class="scent hand">천천히, 그리고 오래 남는<b>얼그레이 향</b></p>
+      </div>
+    </div></section>
 
-    <!-- 마무리 -->
-    <section class="slide">
-      <div class="eyebrow">MERRY CHRISTMAS</div>
-      <p class="msg">오늘 하루가<br>오래 <em>잔향</em>으로 남기를.</p>
-      <p class="sub">목장 모임이 끝나면 바로 출발합니다.<br>그럼, 이따 만나요.</p>
-      <button class="restart" id="restart">처음부터 다시 보기</button>
-    </section>
+    <!-- 차 감상 -->
+    <section class="slide" data-stage="tea"><div class="in">
+      <div class="eyebrow">NOTE</div>
+      <p class="q">오늘 하루, 한마디로 남긴다면?</p>
+      <p class="sub">같이 간 사람들에게 하고 싶은 말도 좋아요.</p>
+      <div class="field"><label>이름</label><input class="who" maxlength="20" placeholder="이름을 적어 주세요" autocomplete="off"></div>
+      <div class="field"><label>감상</label><textarea class="body" maxlength="500" placeholder="오늘은…"></textarea></div>
+      <button class="save">남기기</button>
+      <p class="status"></p>
+      <div class="mine"></div>
+    </div></section>
+
+    <!-- 롤링페이퍼 -->
+    <section class="slide" id="paper"><div class="in">
+      <div class="eyebrow">ROLLING PAPER</div>
+      <p class="msg">우리의 잔향</p>
+      <p class="sub">오늘 다 같이 남긴 감상이에요.</p>
+      <div class="board" id="board"><p class="empty">불러오는 중…</p></div>
+      <button class="refresh" id="refresh">새로고침</button>
+    </div></section>
   </div>
 
+  <div class="navbg"></div>
   <nav class="nav">
     <button class="prev" id="prev" aria-label="이전"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
     <span class="count" id="count"></span>
@@ -248,74 +465,161 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
 
 <script>
 (function(){
+  var API='https://kiwkqevbjxinjrodwlir.supabase.co/rest/v1/insight_day_notes';
+  var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtpd2txZXZianhpbmpyb2R3bGlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5NzYwOTEsImV4cCI6MjA5ODU1MjA5MX0.P7dFpfgVilbXiVN44Ht-RkI29bkXvmc5E6ZwwMifyj0';
+  var HEAD={'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'};
+  var STAGE={boardgame:'보드게임',perfume:'향수 만들기',dejavu:'데자뷰 네컷',dinner:'저녁식사',tea:'따뜻한 차 한 잔'};
+  var NS='http://www.w3.org/2000/svg';
+
+  function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+
+  /* ---- 그림 보조: 로즈마리 잎, 목화 ---- */
+  [].forEach.call(document.querySelectorAll('.sprig'),function(p){
+    var len=p.getTotalLength(), n=+p.dataset.count, col=p.dataset.color, g=document.createElementNS(NS,'g');
+    g.setAttribute('filter','url(#wc)');
+    for(var i=1;i<n;i++){
+      var t=len*i/n, a=p.getPointAtLength(t), b=p.getPointAtLength(Math.min(len,t+1));
+      var ang=Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI, side=i%2?1:-1, size=1-(i/n)*0.45;
+      var e=document.createElementNS(NS,'ellipse');
+      e.setAttribute('cx',a.x);e.setAttribute('cy',a.y);e.setAttribute('rx',13*size);e.setAttribute('ry',2.8*size);
+      e.setAttribute('fill',col);e.setAttribute('opacity',.75+Math.random()*.2);
+      e.setAttribute('transform','rotate('+(ang+side*48)+' '+a.x+' '+a.y+') translate('+(9*size)+' 0)');
+      g.appendChild(e);
+    }
+    p.parentNode.insertBefore(g,p);
+  });
+  [].forEach.call(document.querySelectorAll('.cotton'),function(c){
+    var x=+c.dataset.x,y=+c.dataset.y,s=+(c.dataset.s||1);
+    c.setAttribute('transform','translate('+x+' '+y+') scale('+s+')');
+    var html='<g filter="url(#wc)"><path d="M0 4 l-14 10 l6 -2 l-2 8 l10 -12 l10 12 l-2 -8 l6 2z" fill="#8A6142"/>'+
+      '<circle cx="-11" cy="-4" r="12" fill="#FFFFFF"/><circle cx="11" cy="-4" r="12" fill="#FFFFFF"/><circle cx="0" cy="-14" r="13" fill="#FFFFFF"/><circle cx="0" cy="2" r="11" fill="#FDFBF7"/></g>'+
+      '<g filter="url(#pen)" fill="none" stroke="#9A9286" stroke-width="1.1"><circle cx="-11" cy="-4" r="12"/><circle cx="11" cy="-4" r="12"/><circle cx="0" cy="-14" r="13"/></g>'+
+      '<path d="M0 14 q2 14 -4 26" stroke="#6B5A3A" stroke-width="2" fill="none" filter="url(#pen)"/>';
+    c.innerHTML=html;
+  });
+
+  /* ---- 슬라이드 ---- */
   var env=document.getElementById('env'), intro=document.getElementById('intro'), deck=document.getElementById('deck');
   var slides=[].slice.call(document.querySelectorAll('.slide'));
   var progress=document.getElementById('progress'), count=document.getElementById('count');
   var prevBtn=document.getElementById('prev'), nextBtn=document.getElementById('next');
-  var idx=0, opened=false;
-  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var idx=0, opened=false, reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var paperIdx=slides.indexOf(document.getElementById('paper')), poll=null;
 
-  // 눈
   if(!reduce){
     for(var i=0;i<28;i++){
-      var s=document.createElement('span'); s.className='snow';
-      var size=2+Math.random()*5;
+      var s=document.createElement('span'); s.className='snow'; var size=2+Math.random()*5;
       s.style.cssText='left:'+(Math.random()*100)+'%;width:'+size+'px;height:'+size+'px;opacity:'+(.3+Math.random()*.6)+
         ';animation-duration:'+(6+Math.random()*8)+'s;animation-delay:-'+(Math.random()*12)+'s';
       intro.insertBefore(s,intro.firstChild);
     }
   }
-
   slides.forEach(function(){progress.appendChild(document.createElement('i'))});
   var bars=[].slice.call(progress.children);
 
   function render(){
     slides.forEach(function(s,i){
-      s.classList.toggle('active',i===idx);
-      s.classList.toggle('prev',i<idx);
-      s.setAttribute('aria-hidden',i!==idx);
+      s.classList.toggle('active',i===idx); s.classList.toggle('prev',i<idx); s.setAttribute('aria-hidden',i!==idx);
     });
     bars.forEach(function(b,i){b.classList.toggle('on',i<=idx)});
     count.textContent=(idx+1)+' / '+slides.length;
-    prevBtn.disabled=idx===0;
-    nextBtn.disabled=idx===slides.length-1;
+    prevBtn.disabled=idx===0; nextBtn.disabled=idx===slides.length-1;
+    slides[idx].scrollTop=0;
+    clearInterval(poll);
+    if(idx===paperIdx){ loadBoard(); poll=setInterval(loadBoard,15000); }
   }
-  function go(n){ if(n<0||n>=slides.length) return; idx=n; render(); }
+  function go(n){ if(n<0||n>=slides.length) return; if(document.activeElement) document.activeElement.blur(); idx=n; render(); }
 
   function openEnvelope(){
     if(opened) return; opened=true;
-    var t=reduce?[0,0,0]:[0,700,1700];
+    var t=reduce?[0,0]:[700,1700];
     env.classList.add('open');
-    setTimeout(function(){env.classList.add('lift')},t[1]);
-    setTimeout(function(){
-      intro.classList.add('gone'); deck.classList.add('show');
-      requestAnimationFrame(render);
-    },t[2]);
+    setTimeout(function(){env.classList.add('lift')},t[0]);
+    setTimeout(function(){intro.classList.add('gone');deck.classList.add('show');requestAnimationFrame(render)},t[1]);
   }
   env.addEventListener('click',openEnvelope);
   env.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openEnvelope()}});
-
   nextBtn.addEventListener('click',function(){go(idx+1)});
   prevBtn.addEventListener('click',function(){go(idx-1)});
-  document.getElementById('restart').addEventListener('click',function(){go(0)});
 
+  function interactive(el){return el.closest('input,textarea,button,a,.field,.board,.mine')}
   document.getElementById('slides').addEventListener('click',function(e){
-    if(e.target.closest('button')) return;
+    if(interactive(e.target)||slides[idx].dataset.stage||idx===paperIdx) return;
     if(e.clientX>window.innerWidth*0.35) go(idx+1); else go(idx-1);
   });
-  var sx=null, sy=null;
-  deck.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  var sx=null,sy=null;
+  deck.addEventListener('touchstart',function(e){
+    sx=interactive(e.target)&&e.target.closest('input,textarea')?null:e.touches[0].clientX; sy=e.touches[0].clientY;
+  },{passive:true});
   deck.addEventListener('touchend',function(e){
     if(sx===null) return;
     var dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
-    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){ e.preventDefault(); go(dx<0?idx+1:idx-1); }
+    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){ go(dx<0?idx+1:idx-1); }
     sx=null;
   });
   document.addEventListener('keydown',function(e){
-    if(!opened) return;
+    if(!opened||/INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
     if(e.key==='ArrowRight') go(idx+1);
     if(e.key==='ArrowLeft') go(idx-1);
   });
+
+  /* ---- 감상 남기기 ---- */
+  var savedName=store('iday_name')||'';
+  function mineKey(st){return 'iday_mine_'+st}
+  function showMine(sec){
+    var st=sec.dataset.stage, box=sec.querySelector('.mine'), list=[];
+    try{list=JSON.parse(store(mineKey(st))||'[]')}catch(e){}
+    box.innerHTML='';
+    list.forEach(function(t){var p=document.createElement('p');p.textContent=t;box.appendChild(p)});
+  }
+  slides.forEach(function(sec){
+    if(!sec.dataset.stage) return;
+    var who=sec.querySelector('.who'), body=sec.querySelector('.body'), btn=sec.querySelector('.save'), st=sec.querySelector('.status');
+    who.value=savedName;
+    who.addEventListener('input',function(){
+      savedName=who.value.trim(); store('iday_name',savedName);
+      [].forEach.call(document.querySelectorAll('.who'),function(w){if(w!==who) w.value=who.value});
+    });
+    showMine(sec);
+    btn.addEventListener('click',function(){
+      var name=who.value.trim(), text=body.value.trim();
+      st.className='status';
+      if(!name){st.textContent='이름을 먼저 적어 주세요';st.classList.add('err');who.focus();return}
+      if(!text){st.textContent='감상을 적어 주세요';st.classList.add('err');body.focus();return}
+      btn.disabled=true; st.textContent='남기는 중…';
+      fetch(API,{method:'POST',headers:Object.assign({'Prefer':'return=minimal'},HEAD),
+        body:JSON.stringify({author:name,stage:sec.dataset.stage,body:text})})
+      .then(function(r){
+        if(!r.ok) throw new Error(r.status);
+        var list=[]; try{list=JSON.parse(store(mineKey(sec.dataset.stage))||'[]')}catch(e){}
+        list.push(text); store(mineKey(sec.dataset.stage),JSON.stringify(list));
+        body.value=''; showMine(sec);
+        st.textContent='남겼어요! 마지막 장에서 볼 수 있어요'; st.classList.add('ok');
+      })
+      .catch(function(){st.textContent='저장이 안 됐어요. 잠시 후 다시 눌러 주세요';st.classList.add('err')})
+      .then(function(){btn.disabled=false});
+    });
+  });
+
+  /* ---- 롤링페이퍼 ---- */
+  var board=document.getElementById('board');
+  function loadBoard(){
+    fetch(API+'?select=author,stage,body,created_at&order=created_at.asc',{headers:HEAD})
+    .then(function(r){if(!r.ok) throw new Error(r.status); return r.json()})
+    .then(function(rows){
+      board.innerHTML='';
+      if(!rows.length){board.innerHTML='<p class="empty">아직 남긴 감상이 없어요</p>';return}
+      rows.forEach(function(r){
+        var d=document.createElement('div'); d.className='note hand '+r.stage;
+        var tag=document.createElement('span'); tag.className='tag'; tag.textContent=STAGE[r.stage]||'';
+        var tx=document.createElement('div'); tx.textContent=r.body;
+        var by=document.createElement('span'); by.className='by'; by.textContent='- '+r.author;
+        d.appendChild(tag); d.appendChild(tx); d.appendChild(by); board.appendChild(d);
+      });
+    })
+    .catch(function(){ if(!board.querySelector('.note')) board.innerHTML='<p class="empty">불러오지 못했어요. 새로고침을 눌러 주세요</p>'; });
+  }
+  document.getElementById('refresh').addEventListener('click',loadBoard);
 })();
 </script>
 </body>
