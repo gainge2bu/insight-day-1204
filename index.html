@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#173D2E">
+<title>INSIGHT DAY · 잔향</title>
+<style>
+:root{
+  --green:#173D2E; --green2:#21543F; --red:#B3262E; --red2:#8E1C23;
+  --gold:#C9A66B; --cream:#F7F2E8; --paper:#FFFCF6;
+  --ink:#1D2A22; --muted:#6C7168; --line:#E3D9C6;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:var(--green);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Malgun Gothic","맑은 고딕",sans-serif;
+  color:var(--ink);word-break:keep-all;-webkit-font-smoothing:antialiased}
+button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
+
+/* ---------- 봉투 ---------- */
+#intro{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;
+  background:radial-gradient(120% 80% at 50% 40%,#22553F 0%,#173D2E 60%,#0F2A1F 100%);
+  transition:opacity .7s ease;z-index:10}
+#intro.gone{opacity:0;pointer-events:none}
+.snow{position:absolute;top:-10px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.75);animation:fall linear infinite}
+@keyframes fall{to{transform:translate3d(20px,110vh,0)}}
+.to{color:var(--gold);font-size:13px;letter-spacing:5px;margin-bottom:34px;font-weight:700;position:relative}
+.envelope{position:relative;width:min(78vw,320px);aspect-ratio:3/2;perspective:900px;cursor:pointer}
+.env-back{position:absolute;inset:0;background:var(--red2);border-radius:6px}
+.letter{position:absolute;left:6%;right:6%;top:6%;height:88%;background:var(--paper);border-radius:4px;
+  z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.letter small{font-size:10px;letter-spacing:4px;color:var(--green);font-weight:700}
+.letter b{font-size:30px;color:var(--red);margin-top:4px}
+.env-front{position:absolute;inset:0;z-index:3;border-radius:6px;background:var(--red);
+  clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%)}
+.flap{position:absolute;inset:0;z-index:4;background:#C3343B;border-radius:6px 6px 0 0;
+  clip-path:polygon(0 0,100% 0,50% 60%);transform-origin:top center;transition:transform .7s cubic-bezier(.4,0,.2,1)}
+.seal{position:absolute;left:50%;top:60%;width:48px;height:48px;margin:-24px 0 0 -24px;z-index:5;border-radius:50%;
+  background:var(--gold);color:var(--green);display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:17px;box-shadow:0 2px 6px rgba(0,0,0,.3),inset 0 0 0 3px rgba(255,255,255,.25);transition:opacity .3s,transform .3s}
+.hint{margin-top:36px;color:#D8C9A8;font-size:14px;animation:blink 1.8s ease-in-out infinite;position:relative}
+@keyframes blink{50%{opacity:.35}}
+.envelope.open .seal{opacity:0;transform:scale(.6)}
+.envelope.open .flap{transform:rotateX(180deg)}
+.envelope.lift .flap{z-index:1}
+.envelope.lift .letter{transform:translateY(-62%)}
+.envelope.open ~ .hint{opacity:0;animation:none;transition:opacity .3s}
+
+/* ---------- 카드 ---------- */
+#deck{position:fixed;inset:0;background:var(--cream);opacity:0;transition:opacity .7s ease}
+#deck.show{opacity:1}
+.frame{position:absolute;inset:12px;border:2px solid var(--green);border-radius:6px;pointer-events:none}
+.frame::after{content:"";position:absolute;inset:4px;border:1px solid var(--red);border-radius:3px;opacity:.55}
+.progress{position:absolute;top:calc(30px + env(safe-area-inset-top));left:34px;right:34px;display:flex;gap:5px;z-index:3}
+.progress i{flex:1;height:3px;background:#E3D9C6;border-radius:2px;overflow:hidden;position:relative}
+.progress i.on::after{content:"";position:absolute;inset:0;background:var(--red)}
+
+.slides{position:absolute;inset:0}
+.slide{position:absolute;inset:0;padding:calc(78px + env(safe-area-inset-top)) 36px calc(112px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;justify-content:center;
+  opacity:0;transform:translateX(24px);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
+.slide.active{opacity:1;transform:none;pointer-events:auto}
+.slide.prev{transform:translateX(-24px)}
+.slide > *{opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+.slide.active > *{opacity:1;transform:none}
+.slide.active > *:nth-child(2){transition-delay:.1s}
+.slide.active > *:nth-child(3){transition-delay:.2s}
+.slide.active > *:nth-child(4){transition-delay:.3s}
+.slide.active > *:nth-child(5){transition-delay:.4s}
+.slide.active > *:nth-child(6){transition-delay:.5s}
+
+.eyebrow{font-size:12px;letter-spacing:5px;color:var(--red);font-weight:800}
+.lead{font-size:19px;color:#4C5149;margin-top:22px}
+.title{font-size:72px;font-weight:800;color:var(--green);line-height:1.1;margin-top:6px;letter-spacing:-1px}
+.title .dot{color:var(--red)}
+.meta{margin-top:28px;padding-top:22px;border-top:1px solid var(--line);font-size:15px;color:var(--muted);line-height:1.8}
+.meta b{color:var(--red)}
+
+.msg{font-size:22px;line-height:1.7;font-weight:700;margin-top:20px}
+.msg em{font-style:normal;color:var(--red)}
+.sub{font-size:15px;color:var(--muted);line-height:1.8;margin-top:18px}
+.flow{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px}
+.flow span{font-size:13.5px;font-weight:700;padding:7px 12px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--green)}
+.flow span:nth-child(even){color:var(--red)}
+
+/* 시간 슬라이드 */
+.top{display:flex;align-items:center;justify-content:space-between}
+.step{font-size:12.5px;color:var(--muted);letter-spacing:2px;font-weight:700}
+.chip{font-size:12px;font-weight:700;color:#fff;background:var(--green);padding:5px 10px;border-radius:20px}
+.time{font-size:50px;font-weight:800;color:var(--red);letter-spacing:-1px;margin-top:12px;font-variant-numeric:tabular-nums;line-height:1}
+.act{font-size:32px;font-weight:800;color:var(--green);margin-top:12px;letter-spacing:-.5px}
+.phrase{font-size:17px;color:#5A5F57;margin-top:8px}
+.box{margin-top:26px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px 18px}
+.box li{list-style:none;position:relative;padding:13px 0 13px 19px;font-size:15.5px;line-height:1.55;border-bottom:1px dashed var(--line)}
+.box li:last-child{border-bottom:0}
+.box li::before{content:"";position:absolute;left:0;top:21px;width:7px;height:7px;border-radius:50%;background:var(--red)}
+.box li:nth-child(even)::before{background:var(--green)}
+.box b{color:var(--green)}
+
+.restart{margin-top:30px;align-self:flex-start;font-size:14px;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:2px}
+
+/* 내비게이션 */
+.nav{position:absolute;left:28px;right:28px;bottom:calc(28px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;z-index:3}
+.nav button{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
+.nav .next{background:var(--red);color:#fff;box-shadow:0 3px 10px rgba(179,38,46,.3)}
+.nav .prev{border:1.5px solid #CFC3AC;color:var(--green)}
+.nav button:disabled{opacity:0;pointer-events:none}
+.nav svg{width:20px;height:20px}
+.count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:1px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms !important;animation:none !important}
+  .snow{display:none}
+}
+@media (max-height:700px){
+  .title{font-size:58px}.time{font-size:40px}.act{font-size:26px}.msg{font-size:19px}
+  .box{margin-top:18px}.box li{padding:10px 0;font-size:14.5px}
+}
+</style>
+</head>
+<body>
+
+<section id="intro">
+  <div class="to">TO. 우리 팀</div>
+  <div class="envelope" id="env" role="button" aria-label="초대장 열기" tabindex="0">
+    <div class="env-back"></div>
+    <div class="letter"><small>INSIGHT DAY</small><b>잔향</b></div>
+    <div class="env-front"></div>
+    <div class="flap"></div>
+    <div class="seal">잔</div>
+  </div>
+  <div class="hint">봉투를 눌러 열어 주세요</div>
+</section>
+
+<main id="deck" aria-live="polite">
+  <div class="frame"></div>
+  <div class="progress" id="progress"></div>
+
+  <div class="slides" id="slides">
+    <!-- 표지 -->
+    <section class="slide">
+      <div class="eyebrow">INSIGHT DAY</div>
+      <div class="lead">오늘 하루가 우리에게 남길 것,</div>
+      <div class="title">잔향<span class="dot">.</span></div>
+      <div class="meta"><b>12월 4일 금요일, 오늘</b><br>13:15 출발 · 저녁까지 함께해요</div>
+    </section>
+
+    <!-- 초대 -->
+    <section class="slide">
+      <div class="eyebrow">INVITATION</div>
+      <p class="msg">오늘, 인사이트 데이에<br>여러분을 초대합니다.</p>
+      <p class="sub">어디로 가는지는 도착할 때까지 비밀이에요.<br>오늘 무엇을 하는지만 미리 알려드릴게요.</p>
+      <div class="flow"><span>보드게임</span><span>향수 공방</span><span>사진</span><span>저녁</span><span>카페</span></div>
+    </section>
+
+    <!-- 01 출발 -->
+    <section class="slide">
+      <div class="top"><span class="step">01 — 06</span><span class="chip">이동</span></div>
+      <div class="time">13:15</div>
+      <div class="act">출발</div>
+      <div class="phrase">설렘을 챙겨 출발</div>
+      <ul class="box">
+        <li>목장 모임이 끝나면 다 같이 바로 출발해요</li>
+        <li>목적지는 도착하면 알 수 있어요</li>
+        <li>이동하는 길도 사진으로 남겨요</li>
+      </ul>
+    </section>
+
+    <!-- 02 보드게임 -->
+    <section class="slide">
+      <div class="top"><span class="step">02 — 06</span><span class="chip">약 2시간</span></div>
+      <div class="time">13:30</div>
+      <div class="act">보드게임</div>
+      <div class="phrase">머리를 맞대고, 때로는 맞서고</div>
+      <ul class="box">
+        <li>다섯 명 모두가 각자 겨루는 <b>개인전</b></li>
+        <li>바퀴벌레 포커, 젠가, 할리갈리 등</li>
+        <li>전략은 각자, 웃음은 다 같이</li>
+      </ul>
+    </section>
+
+    <!-- 03 향수 공방 -->
+    <section class="slide">
+      <div class="top"><span class="step">03 — 06</span><span class="chip">약 1시간 30분</span></div>
+      <div class="time">15:45</div>
+      <div class="act">향수 공방</div>
+      <div class="phrase">오늘을 오래 남길 무언가를 만들어요</div>
+      <ul class="box">
+        <li>여러 향을 맡아 보고 골라 <b>나만의 향수</b>를 직접 만들어요</li>
+        <li>사람은 향으로 기억된다고 하죠</li>
+        <li>오늘의 키워드 ‘잔향’이 여기서 시작돼요</li>
+      </ul>
+    </section>
+
+    <!-- 04 사진 -->
+    <section class="slide">
+      <div class="top"><span class="step">04 — 06</span><span class="chip">약 30분</span></div>
+      <div class="time">17:15</div>
+      <div class="act">사진</div>
+      <div class="phrase">지금 이 모습 그대로</div>
+      <ul class="box">
+        <li>방금 만든 향수를 들고 <b>다 같이 한 장</b></li>
+        <li>오늘의 우리를 사진으로 남겨요</li>
+      </ul>
+    </section>
+
+    <!-- 05 저녁 -->
+    <section class="slide">
+      <div class="top"><span class="step">05 — 06</span><span class="chip">약 1시간 15분</span></div>
+      <div class="time">18:00</div>
+      <div class="act">저녁</div>
+      <div class="phrase">한 테이블에 둘러앉아</div>
+      <ul class="box">
+        <li>메뉴는 <b>닭갈비</b>, 마무리는 볶음밥</li>
+        <li>오늘 하루 이야기를 나누며 든든하게</li>
+      </ul>
+    </section>
+
+    <!-- 06 카페 -->
+    <section class="slide">
+      <div class="top"><span class="step">06 — 06</span><span class="chip">~ 20:00</span></div>
+      <div class="time">19:15</div>
+      <div class="act">카페</div>
+      <div class="phrase">천천히, 오늘을 마무리하며</div>
+      <ul class="box">
+        <li>따뜻한 음료 한 잔과 함께</li>
+        <li>오늘 가장 기억에 남는 순간 나누기</li>
+        <li>19:30 ~ 20:00 사이에 마무리해요</li>
+      </ul>
+    </section>
+
+    <!-- 마무리 -->
+    <section class="slide">
+      <div class="eyebrow">MERRY CHRISTMAS</div>
+      <p class="msg">오늘 하루가<br>오래 <em>잔향</em>으로 남기를.</p>
+      <p class="sub">목장 모임이 끝나면 바로 출발합니다.<br>그럼, 이따 만나요.</p>
+      <button class="restart" id="restart">처음부터 다시 보기</button>
+    </section>
+  </div>
+
+  <nav class="nav">
+    <button class="prev" id="prev" aria-label="이전"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <span class="count" id="count"></span>
+    <button class="next" id="next" aria-label="다음"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg></button>
+  </nav>
+</main>
+
+<script>
+(function(){
+  var env=document.getElementById('env'), intro=document.getElementById('intro'), deck=document.getElementById('deck');
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var progress=document.getElementById('progress'), count=document.getElementById('count');
+  var prevBtn=document.getElementById('prev'), nextBtn=document.getElementById('next');
+  var idx=0, opened=false;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 눈
+  if(!reduce){
+    for(var i=0;i<28;i++){
+      var s=document.createElement('span'); s.className='snow';
+      var size=2+Math.random()*5;
+      s.style.cssText='left:'+(Math.random()*100)+'%;width:'+size+'px;height:'+size+'px;opacity:'+(.3+Math.random()*.6)+
+        ';animation-duration:'+(6+Math.random()*8)+'s;animation-delay:-'+(Math.random()*12)+'s';
+      intro.insertBefore(s,intro.firstChild);
+    }
+  }
+
+  slides.forEach(function(){progress.appendChild(document.createElement('i'))});
+  var bars=[].slice.call(progress.children);
+
+  function render(){
+    slides.forEach(function(s,i){
+      s.classList.toggle('active',i===idx);
+      s.classList.toggle('prev',i<idx);
+      s.setAttribute('aria-hidden',i!==idx);
+    });
+    bars.forEach(function(b,i){b.classList.toggle('on',i<=idx)});
+    count.textContent=(idx+1)+' / '+slides.length;
+    prevBtn.disabled=idx===0;
+    nextBtn.disabled=idx===slides.length-1;
+  }
+  function go(n){ if(n<0||n>=slides.length) return; idx=n; render(); }
+
+  function openEnvelope(){
+    if(opened) return; opened=true;
+    var t=reduce?[0,0,0]:[0,700,1700];
+    env.classList.add('open');
+    setTimeout(function(){env.classList.add('lift')},t[1]);
+    setTimeout(function(){
+      intro.classList.add('gone'); deck.classList.add('show');
+      requestAnimationFrame(render);
+    },t[2]);
+  }
+  env.addEventListener('click',openEnvelope);
+  env.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openEnvelope()}});
+
+  nextBtn.addEventListener('click',function(){go(idx+1)});
+  prevBtn.addEventListener('click',function(){go(idx-1)});
+  document.getElementById('restart').addEventListener('click',function(){go(0)});
+
+  document.getElementById('slides').addEventListener('click',function(e){
+    if(e.target.closest('button')) return;
+    if(e.clientX>window.innerWidth*0.35) go(idx+1); else go(idx-1);
+  });
+  var sx=null, sy=null;
+  deck.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  deck.addEventListener('touchend',function(e){
+    if(sx===null) return;
+    var dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){ e.preventDefault(); go(dx<0?idx+1:idx-1); }
+    sx=null;
+  });
+  document.addEventListener('keydown',function(e){
+    if(!opened) return;
+    if(e.key==='ArrowRight') go(idx+1);
+    if(e.key==='ArrowLeft') go(idx-1);
+  });
+})();
+</script>
+</body>
+</html>
