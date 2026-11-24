@@ -47,6 +47,28 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
 .envelope.lift .flap{z-index:1}
 .envelope.lift .letter{transform:translateY(-62%)}
 .envelope.open ~ .hint{opacity:0;animation:none;transition:opacity .3s}
+.envelope{transition:transform .6s ease,opacity .6s ease}
+.envelope.drop{transform:translateY(70px);opacity:0}
+#intro .to{transition:opacity .4s}
+#intro.pulling .to{opacity:0}
+/* 꺼내서 펼치는 카드 */
+#unfold{position:fixed;z-index:30;perspective:1000px;transform-origin:50% 0;
+  transition:left .6s cubic-bezier(.2,.8,.2,1),top .6s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.6,0,.4,1),opacity .8s ease}
+#unfold.grow{opacity:0}
+.uf-bot,.uf-top,.uf-out{position:absolute;left:0;right:0;background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.uf-bot{top:0;bottom:0;border-radius:0 0 5px 5px;box-shadow:0 14px 30px rgba(0,0,0,.28)}
+.uf-bot b{font-size:44px;font-weight:800;color:var(--green);letter-spacing:-1px;line-height:1}
+.uf-bot b i{font-style:normal;color:var(--red)}
+.uf-bot span{font-size:12px;color:var(--muted);margin-top:10px;letter-spacing:1px}
+.uf-top{bottom:100%;height:100%;border-radius:5px 5px 0 0;border-bottom:1px dashed #E3D9C6;
+  transform-origin:50% 100%;transform:rotateX(-180deg);opacity:0;
+  transition:transform .95s cubic-bezier(.3,.7,.2,1),opacity 0s .42s;box-shadow:0 -6px 20px rgba(0,0,0,.12)}
+.uf-top small,.uf-out small{font-size:10px;letter-spacing:4px;color:var(--red);font-weight:800}
+.uf-top p{font-size:15px;color:#4C5149;margin-top:10px;line-height:1.5}
+.uf-out{inset:0;border-radius:5px;z-index:2;transition:opacity .25s ease}
+.uf-out b{font-size:30px;color:var(--red);margin-top:4px}
+#unfold.unf .uf-top{transform:none;opacity:1}
+#unfold.unf .uf-out{opacity:0}
 
 /* ---------- 카드 ---------- */
 #deck{position:fixed;inset:0;background:var(--cream);opacity:0;transition:opacity .7s ease}
@@ -595,6 +617,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     prevBtn.disabled=idx===0; nextBtn.disabled=idx===slides.length-1;
     nextBtn.classList.toggle('dim',slides[idx].classList.contains('locked'));
     slides[idx].scrollTop=0;
+    store('iday2_idx',String(idx));
     clearInterval(poll);
     if(idx===paperIdx && !slides[idx].classList.contains('locked')){ loadBoard(); poll=setInterval(loadBoard,15000); }
   }
@@ -604,12 +627,35 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     if(document.activeElement) document.activeElement.blur(); idx=n; render();
   }
 
+  function showDeck(){intro.classList.add('gone');deck.classList.add('show');requestAnimationFrame(render)}
   function openEnvelope(){
     if(opened) return; opened=true;
-    var t=reduce?[0,0]:[700,1700];
-    env.classList.add('open');
-    setTimeout(function(){env.classList.add('lift')},t[0]);
-    setTimeout(function(){intro.classList.add('gone');deck.classList.add('show');requestAnimationFrame(render)},t[1]);
+    if(reduce){showDeck();return}
+    env.classList.add('open');                                   // 1. 덮개가 열리고
+    setTimeout(function(){env.classList.add('lift')},700);        // 2. 카드가 봉투에서 올라오고
+    setTimeout(pullOut,1650);                                     // 3. 꺼내서 펼침
+  }
+  function pullOut(){
+    var letter=env.querySelector('.letter'), r=letter.getBoundingClientRect();
+    var vw=window.innerWidth, vh=window.innerHeight;
+    var card=document.createElement('div'); card.id='unfold';
+    card.innerHTML='<div class="uf-top"><small>INSIGHT DAY</small><p>오늘 하루가<br>우리에게 남길 것,</p></div>'+
+      '<div class="uf-bot"><b>잔향<i>.</i></b><span>12월 4일 금요일</span></div>'+
+      '<div class="uf-out"><small>INSIGHT DAY</small><b>잔향</b></div>';
+    card.style.cssText='left:'+r.left+'px;top:'+r.top+'px;width:'+r.width+'px;height:'+r.height+'px';
+    document.body.appendChild(card);
+    letter.style.visibility='hidden';
+    env.classList.add('drop'); intro.classList.add('pulling');
+    // 화면 가운데로 꺼내기 (접힌 선이 화면 정중앙에 오도록)
+    void card.offsetWidth;
+    card.style.left=(vw-r.width)/2+'px'; card.style.top=(vh/2)+'px';
+    setTimeout(function(){card.classList.add('unf')},650);       // 위쪽 반이 펼쳐짐
+    setTimeout(function(){                                        // 화면 가득 커지며 카드 화면으로
+      var s=Math.max(vw/r.width,vh/(r.height*2))*1.15;
+      card.classList.add('grow'); card.style.transform='scale('+s+')';
+      showDeck();
+    },1900);
+    setTimeout(function(){card.remove()},2700);
   }
   env.addEventListener('click',openEnvelope);
   env.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openEnvelope()}});
@@ -650,6 +696,10 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     if(!sec.dataset.stage) return;
     var who=sec.querySelector('.who'), body=sec.querySelector('.body'), btn=sec.querySelector('.save'), st=sec.querySelector('.status');
     who.value=savedName;
+    // 쓰던 감상은 창을 닫아도 남아 있도록 임시 저장
+    var dKey='iday2_draft_'+sec.dataset.stage;
+    body.value=store(dKey)||'';
+    body.addEventListener('input',function(){store(dKey,body.value)});
     who.addEventListener('input',function(){
       savedName=who.value.trim(); store('iday2_name',savedName);
       [].forEach.call(document.querySelectorAll('.who'),function(w){if(w!==who) w.value=who.value});
@@ -667,7 +717,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
         if(!r.ok) throw new Error(r.status);
         var list=[]; try{list=JSON.parse(store(mineKey(sec.dataset.stage))||'[]')}catch(e){}
         list.push(text); store(mineKey(sec.dataset.stage),JSON.stringify(list));
-        body.value=''; showMine(sec);
+        body.value=''; store(dKey,''); showMine(sec);
         st.textContent='남겼어요! 마지막 장에서 볼 수 있어요'; st.classList.add('ok');
       })
       .catch(function(){st.textContent='저장이 안 됐어요. 잠시 후 다시 눌러 주세요';st.classList.add('err')})
@@ -927,6 +977,19 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
   // 롤링페이퍼 글자는 들어갈 때마다 최신으로
   var _render=render;
   render=function(){ var p=slides[paperIdx]; if(p.classList.contains('locked')) paintGate(p); _render(); };
+
+  /* ---- 다시 들어오면 보던 곳부터 이어서 ---- */
+  var savedIdx=parseInt(store('iday2_idx'),10)||0;
+  if(savedIdx>0){
+    // 아직 못 푼 문제를 건너뛰지 않도록, 처음 잠긴 페이지까지만
+    for(var j=0;j<savedIdx&&j<slides.length;j++){ if(slides[j].classList.contains('locked')){savedIdx=j;break} }
+    idx=Math.min(savedIdx,slides.length-1);
+    opened=true;
+    intro.style.display='none';
+    deck.classList.add('show');
+    render();
+    setTimeout(function(){toast('보던 곳부터 이어서 볼게요')},400);
+  }
 })();
 </script>
 </body>
