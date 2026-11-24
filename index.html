@@ -259,8 +259,8 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
       <div class="eyebrow">TODAY</div>
       <p class="msg">오늘은 이렇게 보내요</p>
       <div class="sched">
-        <div><span>13:40</span><em data-sched="boardgame">???</em></div>
-        <div><span>15:45</span><em data-sched="perfume">???</em></div>
+        <div><span>14:00</span><em data-sched="boardgame">???</em></div>
+        <div><span>16:00</span><em data-sched="perfume">???</em></div>
         <div><span>17:15</span><em data-sched="dejavu">???</em></div>
         <div><span>18:00</span><em data-sched="dinner">???</em></div>
         <div><span>19:15</span><em data-sched="tea">???</em></div>
@@ -281,7 +281,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     <!-- 보드게임 -->
     <section class="slide" data-gate="boardgame"><div class="in reveal">
       <div class="top"><span class="step">02 / 06</span></div>
-      <div class="time">13:40</div>
+      <div class="time">14:00</div>
       <div class="act">보드게임</div>
       <p class="desc">다섯 명이 각자 붙는 개인전이에요.</p>
       <div class="art">
@@ -322,7 +322,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     <!-- 향수 만들기 -->
     <section class="slide" data-gate="perfume"><div class="in reveal">
       <div class="top"><span class="step">03 / 06</span></div>
-      <div class="time">15:45</div>
+      <div class="time">16:00</div>
       <div class="act">향수 만들기</div>
       <p class="desc">각자 고른 향으로 나만의 향수를 만들어요.</p>
       <div class="art">
@@ -465,11 +465,11 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
       <div class="mine"></div>
     </div></section>
 
-    <!-- 따뜻한 차 한 잔 -->
+    <!-- 티타임 -->
     <section class="slide" data-gate="tea"><div class="in reveal">
       <div class="top"><span class="step">06 / 06</span></div>
       <div class="time">19:15</div>
-      <div class="act">따뜻한 차 한 잔</div>
+      <div class="act">티타임</div>
       <p class="desc">차 한 잔 마시면서 오늘 얘기 나눠요.</p>
       <div class="art">
         <svg viewBox="0 0 280 200" role="img" aria-label="찻잔 그림">
@@ -532,10 +532,15 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
   var API='https://kiwkqevbjxinjrodwlir.supabase.co/rest/v1/insight_day_notes';
   var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtpd2txZXZianhpbmpyb2R3bGlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5NzYwOTEsImV4cCI6MjA5ODU1MjA5MX0.P7dFpfgVilbXiVN44Ht-RkI29bkXvmc5E6ZwwMifyj0';
   var HEAD={'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'};
-  var STAGE={boardgame:'보드게임',perfume:'향수 만들기',dejavu:'데자뷰 네컷',dinner:'저녁식사',tea:'따뜻한 차 한 잔'};
+  var STAGE={boardgame:'보드게임',perfume:'향수 만들기',dejavu:'데자뷰 네컷',dinner:'저녁식사',tea:'티타임'};
   var NS='http://www.w3.org/2000/svg';
 
   function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+  // 주소 끝에 ?reset 을 붙여 열면 이 폰에 저장된 풀이·감상 기록을 지우고 처음부터 시작
+  if(/[?&]reset\b/.test(location.search)){
+    try{Object.keys(localStorage).forEach(function(k){if(k.indexOf('iday')===0)localStorage.removeItem(k)})}catch(e){}
+    history.replaceState(null,'',location.pathname);
+  }
 
   /* ---- 그림 보조: 로즈마리 잎, 목화 ---- */
   [].forEach.call(document.querySelectorAll('.sprig'),function(p){
@@ -633,8 +638,8 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
   });
 
   /* ---- 감상 남기기 ---- */
-  var savedName=store('iday_name')||'';
-  function mineKey(st){return 'iday_mine_'+st}
+  var savedName=store('iday2_name')||'';
+  function mineKey(st){return 'iday2_mine_'+st}
   function showMine(sec){
     var st=sec.dataset.stage, box=sec.querySelector('.mine'), list=[];
     try{list=JSON.parse(store(mineKey(st))||'[]')}catch(e){}
@@ -646,7 +651,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     var who=sec.querySelector('.who'), body=sec.querySelector('.body'), btn=sec.querySelector('.save'), st=sec.querySelector('.status');
     who.value=savedName;
     who.addEventListener('input',function(){
-      savedName=who.value.trim(); store('iday_name',savedName);
+      savedName=who.value.trim(); store('iday2_name',savedName);
       [].forEach.call(document.querySelectorAll('.who'),function(w){if(w!==who) w.value=who.value});
     });
     showMine(sec);
@@ -694,10 +699,10 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
   var MASTER='30a466416d11ec355dacddd017e3019d77d1440ad347ea540623c30812e85c76';
   var ORDER=['boardgame','perfume','dejavu','dinner','tea'];
   var GATES={
-    boardgame:{no:'02 / 06',time:'13:40',open:'2026-12-04T13:40:00+09:00',name:'보드게임',letter:'우',type:'text',
+    boardgame:{no:'02 / 06',time:'14:00',open:'2026-12-04T14:00:00+09:00',name:'보드게임',letter:'우',type:'text',
       kind:'초성 퀴즈',ask:'머리를 맑게 해 주는 허브예요.<br>스테이크 구울 때도 올려요.',big:'ㄹㅈㅁㄹ',hint:'첫 글자는 "로"예요',
       h:['b6e6c749d8a8600c13b3fe1f329e747f5f491b357aaa4232c03dc509f04c7a6c']},
-    perfume:{no:'03 / 06',time:'15:45',open:'2026-12-04T15:45:00+09:00',name:'향수 만들기',letter:'리',type:'tiles',
+    perfume:{no:'03 / 06',time:'16:00',open:'2026-12-04T16:00:00+09:00',name:'향수 만들기',letter:'리',type:'tiles',
       kind:'글자 조각 맞추기',ask:'조각을 눌러 순서대로 맞춰 주세요.<br>향수에 가장 많이 쓰이는 초록빛 시트러스예요.',tiles:['못','르','베','가'],hint:'첫 조각은 "베"예요',
       h:['a856b87334fc2d7ce8d7789022cbec4967f3aa43479dca101ee8d689c33eb7b5']},
     dejavu:{no:'04 / 06',time:'17:15',open:'2026-12-04T17:15:00+09:00',name:'데자뷰 네컷',letter:'의',type:'memory',
@@ -706,13 +711,13 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     dinner:{no:'05 / 06',time:'18:00',open:'2026-12-04T18:00:00+09:00',name:'저녁식사',letter:'잔',type:'choice',
       kind:'4지선다',ask:'뱅쇼, 애플파이, 크리스마스 쿠키에<br>공통으로 들어가는 향은?',choices:['바질','시나몬','민트','로즈마리'],
       h:['2c3875efca9a81016c09de5f282c13008ebc6f4520e6a545289c00a74a2bde35']},
-    tea:{no:'06 / 06',time:'19:15',open:'2026-12-04T19:15:00+09:00',name:'따뜻한 차 한 잔',letter:'향',type:'text',
+    tea:{no:'06 / 06',time:'19:15',open:'2026-12-04T19:15:00+09:00',name:'티타임',letter:'향',type:'text',
       kind:'빈칸 채우기',ask:'홍차에 베르가못 향을 입힌 차예요.<br>영국 백작의 이름에서 왔어요.',big:'○○○○ 티',hint:'초성은 ㅇㄱㄹㅇ 이에요',
       h:['ebaa36583b3f0eac959308aca779b228574085b339486a3e3d97f8accd0fb828','914e6d5beea93d0604a49dd1ceae2286ca9ec95f4709474bf929be87420b624c']},
     paper:{type:'final',kind:'마지막 코드',ask:'오늘 모은 글자를 순서대로 넣어 주세요.',hint:'오늘 "우리"가 남긴 것이에요',
       h:['92cc6a8ec842a1d410d9a031d7e89948f642fde3b29a963f8236238e92aaf84e']}
   };
-  var unlocked=[]; try{unlocked=JSON.parse(store('iday_unlocked')||'[]')}catch(e){}
+  var unlocked=[]; try{unlocked=JSON.parse(store('iday2_unlocked')||'[]')}catch(e){}
   function isOpen(k){return unlocked.indexOf(k)>-1}
 
   function sha(s){
@@ -740,7 +745,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     });
   }
   function unlock(k){
-    if(!isOpen(k)){unlocked.push(k);store('iday_unlocked',JSON.stringify(unlocked))}
+    if(!isOpen(k)){unlocked.push(k);store('iday2_unlocked',JSON.stringify(unlocked))}
     var sec=document.querySelector('[data-gate="'+k+'"]');
     sec.classList.remove('locked'); sec.classList.remove('active');
     updateSched();
