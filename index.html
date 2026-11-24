@@ -134,9 +134,73 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
 .nav .next{background:var(--red);color:#fff;box-shadow:0 3px 10px rgba(179,38,46,.3)}
 .nav .prev{border:1.5px solid #CFC3AC;color:var(--green);background:var(--cream)}
 .nav button:disabled{opacity:0;pointer-events:none}
+.nav .next.dim:not(:disabled){opacity:.35}
 .nav svg{width:20px;height:20px}
 .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:1px}
 .navbg{position:absolute;left:14px;right:14px;bottom:14px;height:calc(92px + env(safe-area-inset-bottom));background:linear-gradient(rgba(247,242,232,0),var(--cream) 40%);z-index:4;pointer-events:none}
+
+/* 잠금 */
+.sched em{font-style:normal}
+.sched em.open{color:var(--green);font-weight:700}
+.slide[data-gate] .gate{display:none}
+.slide.locked .gate{display:block}
+.slide.locked .reveal{display:none}
+.lockact{font-size:30px;font-weight:800;color:#B9B0A2;margin-top:10px;letter-spacing:2px}
+.puzzle{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 16px}
+.puzzle .kind{display:inline-block;font-size:11.5px;font-weight:800;color:#fff;background:var(--green);padding:4px 9px;border-radius:20px}
+.puzzle .ask{font-size:17px;font-weight:700;line-height:1.55;margin-top:12px}
+.puzzle .big{font-size:40px;font-weight:800;color:var(--red);letter-spacing:12px;text-align:center;margin:16px 0 4px}
+.ansrow{display:flex;gap:8px;margin-top:14px}
+.ansrow input{flex:1;min-width:0;font:inherit;font-size:17px;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;outline:none;background:#FFFDF8}
+.ansrow input:focus{border-color:var(--green)}
+.ansrow button{flex:none;padding:0 18px;border-radius:12px;background:var(--red);color:#fff;font-weight:800}
+.hintline{font-size:14px;color:var(--muted);margin-top:10px;min-height:20px;text-align:center}
+.hintline.err{color:var(--red)}
+.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.wait{margin-top:18px;background:#fff;border:1px dashed #CFC3AC;border-radius:16px;padding:26px 16px;text-align:center}
+.wait .lk{font-size:34px}
+.wait p{font-size:17px;font-weight:700;margin-top:8px}
+.wait small{display:block;font-size:14px;color:var(--muted);margin-top:6px}
+.mgr{margin-top:18px;font-size:13px;color:var(--muted);text-align:center}
+.mgr button{border-bottom:1px solid var(--line);padding-bottom:1px}
+.mgrbox{display:none}
+.mgrbox.show{display:flex}
+/* 조각 */
+.slots{display:flex;justify-content:center;gap:8px;margin-top:16px}
+.slots b{width:52px;height:56px;border-radius:10px;border:2px dashed #D6CBB8;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--green);background:#FFFDF8}
+.slots b.f{border-style:solid;border-color:var(--green)}
+.tiles{display:flex;justify-content:center;gap:10px;margin-top:16px}
+.tiles button{width:56px;height:56px;border-radius:12px;background:#F6EBC8;font-size:24px;font-weight:800;color:var(--ink);box-shadow:0 3px 0 #D9C48C;transition:opacity .2s,transform .1s}
+.tiles button:active{transform:translateY(2px);box-shadow:0 1px 0 #D9C48C}
+.tiles button.used{opacity:.2;pointer-events:none}
+.reset{display:block;margin:12px auto 0;font-size:13px;color:var(--muted);border-bottom:1px solid var(--line)}
+/* 짝 맞추기 */
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+.card{aspect-ratio:3/4}
+.card .fl{position:relative;width:100%;height:100%}
+.card.up .fl{animation:flip .32s ease}
+@keyframes flip{0%{transform:scaleX(1)}50%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+.card .f,.card .b{position:absolute;inset:0;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0s .16s}
+.card .f{opacity:0}
+.card.up .f{opacity:1}
+.card.up .b{opacity:0}
+.card .b{background:var(--red);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.12) 0 6px,transparent 6px 12px);border:3px solid #fff;box-shadow:0 0 0 1px #D9CDB9}
+.card .b::after{content:"?";color:#fff;font-weight:800;font-size:20px}
+.card .f{background:#FFFDF8;border:1.5px solid var(--line);font-size:28px}
+.card .f em{font-style:normal;font-size:15px;font-weight:800;color:var(--red);margin-top:2px;height:18px}
+.card.done .f{background:#EEF4EA;border-color:#B9CDB0}
+/* 4지선다 */
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.choices button{height:52px;border-radius:12px;border:1.5px solid var(--line);background:#FFFDF8;font-size:16px;font-weight:700;transition:background .2s}
+.choices button.no{background:#F6E1E1;border-color:#E9B9B9;color:#A44;text-decoration:line-through;pointer-events:none}
+/* 글자 */
+.bag{display:flex;justify-content:center;gap:8px;margin-top:16px}
+.bag b{width:50px;height:50px;border-radius:50%;background:var(--green);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center}
+.bag b.no{background:#E6DED0;color:#B9B0A2}
+.toast{position:fixed;left:50%;top:calc(70px + env(safe-area-inset-top));transform:translate(-50%,-20px);background:var(--green);color:#fff;padding:12px 18px;border-radius:30px;font-size:15px;font-weight:700;opacity:0;transition:opacity .35s,transform .35s;z-index:20;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast b{color:var(--gold);font-size:18px}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms !important;animation:none !important}.snow{display:none}}
 @media (max-height:700px){.title{font-size:58px}.time{font-size:38px}.act{font-size:25px}.art svg{max-height:24vh}.scent{font-size:18px}.scent b{font-size:25px}}
@@ -195,11 +259,11 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
       <div class="eyebrow">TODAY</div>
       <p class="msg">오늘은 이렇게 보내요</p>
       <div class="sched">
-        <div><span>13:30</span>???</div>
-        <div><span>15:45</span>???</div>
-        <div><span>17:15</span>???</div>
-        <div><span>18:00</span>???</div>
-        <div><span>19:15</span>???</div>
+        <div><span>13:30</span><em data-sched="boardgame">???</em></div>
+        <div><span>15:45</span><em data-sched="perfume">???</em></div>
+        <div><span>17:15</span><em data-sched="dejavu">???</em></div>
+        <div><span>18:00</span><em data-sched="dinner">???</em></div>
+        <div><span>19:15</span><em data-sched="tea">???</em></div>
       </div>
       <div class="notice">장소는 <b>매니저의 안내</b>에 따라주세요:)</div>
       <p class="sub">하나 끝날 때마다 짧게 감상을 남겨 주세요.<br>마지막에 다 같이 모아서 봐요.</p>
@@ -215,7 +279,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     </div></section>
 
     <!-- 보드게임 -->
-    <section class="slide"><div class="in">
+    <section class="slide" data-gate="boardgame"><div class="in reveal">
       <div class="top"><span class="step">02 / 06</span></div>
       <div class="time">13:30</div>
       <div class="act">보드게임</div>
@@ -256,7 +320,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     </div></section>
 
     <!-- 향수 만들기 -->
-    <section class="slide"><div class="in">
+    <section class="slide" data-gate="perfume"><div class="in reveal">
       <div class="top"><span class="step">03 / 06</span></div>
       <div class="time">15:45</div>
       <div class="act">향수 만들기</div>
@@ -303,7 +367,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     </div></section>
 
     <!-- 데자뷰 네컷 -->
-    <section class="slide"><div class="in">
+    <section class="slide" data-gate="dejavu"><div class="in reveal">
       <div class="top"><span class="step">04 / 06</span></div>
       <div class="time">17:15</div>
       <div class="act">데자뷰 네컷</div>
@@ -353,7 +417,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     </div></section>
 
     <!-- 저녁식사 -->
-    <section class="slide"><div class="in">
+    <section class="slide" data-gate="dinner"><div class="in reveal">
       <div class="top"><span class="step">05 / 06</span></div>
       <div class="time">18:00</div>
       <div class="act">저녁식사</div>
@@ -402,7 +466,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     </div></section>
 
     <!-- 따뜻한 차 한 잔 -->
-    <section class="slide"><div class="in">
+    <section class="slide" data-gate="tea"><div class="in reveal">
       <div class="top"><span class="step">06 / 06</span></div>
       <div class="time">19:15</div>
       <div class="act">따뜻한 차 한 잔</div>
@@ -446,7 +510,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     </div></section>
 
     <!-- 롤링페이퍼 -->
-    <section class="slide" id="paper"><div class="in">
+    <section class="slide" id="paper" data-gate="paper"><div class="in reveal">
       <div class="eyebrow">ROLLING PAPER</div>
       <p class="msg">우리의 잔향</p>
       <p class="sub">오늘 다 같이 남긴 감상이에요.</p>
@@ -524,11 +588,16 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     bars.forEach(function(b,i){b.classList.toggle('on',i<=idx)});
     count.textContent=(idx+1)+' / '+slides.length;
     prevBtn.disabled=idx===0; nextBtn.disabled=idx===slides.length-1;
+    nextBtn.classList.toggle('dim',slides[idx].classList.contains('locked'));
     slides[idx].scrollTop=0;
     clearInterval(poll);
-    if(idx===paperIdx){ loadBoard(); poll=setInterval(loadBoard,15000); }
+    if(idx===paperIdx && !slides[idx].classList.contains('locked')){ loadBoard(); poll=setInterval(loadBoard,15000); }
   }
-  function go(n){ if(n<0||n>=slides.length) return; if(document.activeElement) document.activeElement.blur(); idx=n; render(); }
+  function go(n){
+    if(n<0||n>=slides.length) return;
+    if(n>idx && slides[idx].classList.contains('locked')){ nudge(slides[idx]); return; }
+    if(document.activeElement) document.activeElement.blur(); idx=n; render();
+  }
 
   function openEnvelope(){
     if(opened) return; opened=true;
@@ -542,7 +611,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
   nextBtn.addEventListener('click',function(){go(idx+1)});
   prevBtn.addEventListener('click',function(){go(idx-1)});
 
-  function interactive(el){return el.closest('input,textarea,button,a,.field,.board,.mine')}
+  function interactive(el){return el.closest('input,textarea,button,a,.field,.board,.mine,.puzzle,.wait,.mgr,.card')}
   document.getElementById('slides').addEventListener('click',function(e){
     if(interactive(e.target)||slides[idx].dataset.stage||idx===paperIdx) return;
     if(e.clientX>window.innerWidth*0.35) go(idx+1); else go(idx-1);
@@ -620,6 +689,243 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     .catch(function(){ if(!board.querySelector('.note')) board.innerHTML='<p class="empty">불러오지 못했어요. 새로고침을 눌러 주세요</p>'; });
   }
   document.getElementById('refresh').addEventListener('click',loadBoard);
+
+  /* ================= 비밀코드 잠금 ================= */
+  var MASTER='30a466416d11ec355dacddd017e3019d77d1440ad347ea540623c30812e85c76';
+  var ORDER=['boardgame','perfume','dejavu','dinner','tea'];
+  var GATES={
+    boardgame:{no:'02 / 06',time:'13:30',open:'2026-12-04T13:30:00+09:00',name:'보드게임',letter:'우',type:'text',
+      kind:'초성 퀴즈',ask:'머리를 맑게 해 주는 허브예요.<br>스테이크 구울 때도 올려요.',big:'ㄹㅈㅁㄹ',hint:'첫 글자는 "로"예요',
+      h:['b6e6c749d8a8600c13b3fe1f329e747f5f491b357aaa4232c03dc509f04c7a6c']},
+    perfume:{no:'03 / 06',time:'15:45',open:'2026-12-04T15:45:00+09:00',name:'향수 만들기',letter:'리',type:'tiles',
+      kind:'글자 조각 맞추기',ask:'조각을 눌러 순서대로 맞춰 주세요.<br>향수에 가장 많이 쓰이는 초록빛 시트러스예요.',tiles:['못','르','베','가'],hint:'첫 조각은 "베"예요',
+      h:['a856b87334fc2d7ce8d7789022cbec4967f3aa43479dca101ee8d689c33eb7b5']},
+    dejavu:{no:'04 / 06',time:'17:15',open:'2026-12-04T17:15:00+09:00',name:'데자뷰 네컷',letter:'의',type:'memory',
+      kind:'짝 맞추기',ask:'어디서 본 것 같은 그림이죠?<br>같은 그림끼리 짝을 찾아 주세요.',after:'목화 꽃에서 온 오늘의 향은?',big:'ㅋㅌ',hint:'목화는 영어로 cotton이에요',
+      h:['615e98bdb96349642668f39be564cdfae895f45cdcbd4831240a9a212bfb4465']},
+    dinner:{no:'05 / 06',time:'18:00',open:'2026-12-04T18:00:00+09:00',name:'저녁식사',letter:'잔',type:'choice',
+      kind:'4지선다',ask:'뱅쇼, 애플파이, 크리스마스 쿠키에<br>공통으로 들어가는 향은?',choices:['바질','시나몬','민트','로즈마리'],
+      h:['2c3875efca9a81016c09de5f282c13008ebc6f4520e6a545289c00a74a2bde35']},
+    tea:{no:'06 / 06',time:'19:15',open:'2026-12-04T19:15:00+09:00',name:'따뜻한 차 한 잔',letter:'향',type:'text',
+      kind:'빈칸 채우기',ask:'홍차에 베르가못 향을 입힌 차예요.<br>영국 백작의 이름에서 왔어요.',big:'○○○○ 티',hint:'초성은 ㅇㄱㄹㅇ 이에요',
+      h:['ebaa36583b3f0eac959308aca779b228574085b339486a3e3d97f8accd0fb828','914e6d5beea93d0604a49dd1ceae2286ca9ec95f4709474bf929be87420b624c']},
+    paper:{type:'final',kind:'마지막 코드',ask:'오늘 모은 글자를 순서대로 넣어 주세요.',hint:'오늘 "우리"가 남긴 것이에요',
+      h:['92cc6a8ec842a1d410d9a031d7e89948f642fde3b29a963f8236238e92aaf84e']}
+  };
+  var unlocked=[]; try{unlocked=JSON.parse(store('iday_unlocked')||'[]')}catch(e){}
+  function isOpen(k){return unlocked.indexOf(k)>-1}
+
+  function sha(s){
+    var n=s.normalize('NFC').replace(/\s+/g,'').toLowerCase();
+    return crypto.subtle.digest('SHA-256',new TextEncoder().encode(n)).then(function(b){
+      return Array.prototype.map.call(new Uint8Array(b),function(x){return ('0'+x.toString(16)).slice(-2)}).join('');
+    });
+  }
+  function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+  function toast(html){
+    var t=el('div','toast',html);document.body.appendChild(t);
+    requestAnimationFrame(function(){t.classList.add('show')});
+    setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},400)},2600);
+  }
+  function shakeEl(e){e.classList.remove('shake');void e.offsetWidth;e.classList.add('shake')}
+  function nudge(sec){
+    var box=sec.querySelector('.gate .puzzle')||sec.querySelector('.gate .wait'); if(box) shakeEl(box);
+    var hl=sec.querySelector('.gate .hintline');
+    if(hl){hl.textContent=sec.querySelector('.gate .wait')?'시간이 되면 열려요':'문제를 풀어야 다음으로 넘어가요';hl.className='hintline err'}
+  }
+
+  function updateSched(){
+    [].forEach.call(document.querySelectorAll('[data-sched]'),function(e){
+      var k=e.dataset.sched; if(isOpen(k)){e.textContent=GATES[k].name;e.classList.add('open')}
+    });
+  }
+  function unlock(k){
+    if(!isOpen(k)){unlocked.push(k);store('iday_unlocked',JSON.stringify(unlocked))}
+    var sec=document.querySelector('[data-gate="'+k+'"]');
+    sec.classList.remove('locked'); sec.classList.remove('active');
+    updateSched();
+    requestAnimationFrame(function(){render()});
+    if(GATES[k].letter) toast('글자 <b>'+GATES[k].letter+'</b> 를 얻었어요');
+    else toast('롤링페이퍼가 열렸어요');
+  }
+  function verify(k,val){
+    return sha(val).then(function(h){return GATES[k].h.indexOf(h)>-1||h===MASTER});
+  }
+
+  /* 공통: 정답 입력줄 */
+  function answerRow(k,ph,onWrong){
+    var row=el('div','ansrow'), inp=el('input'), btn=el('button',null,'확인');
+    inp.placeholder=ph||'정답'; inp.maxLength=20; inp.setAttribute('autocomplete','off');
+    row.appendChild(inp);row.appendChild(btn);
+    function go2(){
+      if(!inp.value.trim()) return;
+      verify(k,inp.value).then(function(ok){
+        if(ok){inp.blur();unlock(k)} else {shakeEl(row);inp.select();onWrong&&onWrong()}
+      });
+    }
+    btn.addEventListener('click',go2);
+    inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();go2()}});
+    return row;
+  }
+  function wrongCounter(k,hl){
+    var n=0; return function(){
+      n++; hl.className='hintline err';
+      hl.textContent=(n>=2&&GATES[k].hint)?'힌트: '+GATES[k].hint:'아쉬워요, 다시 해 볼까요?';
+    };
+  }
+
+  /* 문제 만들기 */
+  function buildPuzzle(k){
+    var g=GATES[k], box=el('div','puzzle');
+    box.appendChild(el('span','kind',g.kind));
+    box.appendChild(el('p','ask',g.ask));
+    var hl=el('p','hintline'), wrong=wrongCounter(k,hl);
+
+    if(g.type==='text'){
+      box.appendChild(el('div','big',g.big));
+      box.appendChild(answerRow(k,'정답을 적어 주세요',wrong));
+    }
+    else if(g.type==='tiles'){
+      var slots=el('div','slots'), tiles=el('div','tiles'), picked=[];
+      for(var i=0;i<g.tiles.length;i++) slots.appendChild(el('b'));
+      g.tiles.forEach(function(t){
+        var b=el('button',null,t);
+        b.addEventListener('click',function(){
+          if(picked.length>=g.tiles.length) return;
+          picked.push(b); b.classList.add('used');
+          var s=slots.children[picked.length-1]; s.textContent=t; s.classList.add('f');
+          if(picked.length===g.tiles.length){
+            var word=picked.map(function(p){return p.textContent}).join('');
+            verify(k,word).then(function(ok){
+              if(ok) unlock(k); else {shakeEl(slots);wrong();setTimeout(clear,650)}
+            });
+          }
+        });
+        tiles.appendChild(b);
+      });
+      function clear(){picked.forEach(function(p){p.classList.remove('used')});picked=[];
+        [].forEach.call(slots.children,function(s){s.textContent='';s.classList.remove('f')})}
+      var rs=el('button','reset','다시 놓기'); rs.addEventListener('click',clear);
+      box.appendChild(slots);box.appendChild(tiles);box.appendChild(rs);
+    }
+    else if(g.type==='memory'){
+      var COT='<svg viewBox="0 0 40 40" width="34" height="34"><circle cx="13" cy="18" r="9" fill="#fff" stroke="#A89F92"/><circle cx="27" cy="18" r="9" fill="#fff" stroke="#A89F92"/><circle cx="20" cy="11" r="9" fill="#fff" stroke="#A89F92"/><path d="M20 24 l-8 7 h16z" fill="#8A6142"/></svg>';
+      var faces={dice:'🎲',perf:'🧴',cam:'📷',cot:COT};
+      var deck=['dice','dice','perf','perf','cam','cam','cot','cot'].sort(function(){return Math.random()-.5});
+      var grid=el('div','mem'), open=[], busy=false, done=0, after=el('div');
+      deck.forEach(function(f){
+        var c=el('div','card','<div class="fl"><div class="b"></div><div class="f">'+faces[f]+'<em></em></div></div>');
+        c.dataset.f=f;
+        c.addEventListener('click',function(){
+          if(busy||c.classList.contains('up')) return;
+          c.classList.add('up'); open.push(c);
+          if(open.length===2){
+            busy=true;
+            var a=open[0], b=open[1];
+            if(a.dataset.f===b.dataset.f){
+              setTimeout(function(){
+                a.classList.add('done');b.classList.add('done');
+                if(a.dataset.f==='cot'){
+                  var cs=[].slice.call(grid.querySelectorAll('[data-f="cot"]'));
+                  cs[0].querySelector('em').textContent='코'; cs[1].querySelector('em').textContent='튼';
+                }
+                open=[];busy=false;done++;
+                if(done===4){
+                  after.appendChild(el('p','ask',g.after));
+                  after.appendChild(el('div','big',g.big));
+                  after.appendChild(answerRow(k,'정답을 적어 주세요',wrong));
+                }
+              },350);
+            } else {
+              setTimeout(function(){a.classList.remove('up');b.classList.remove('up');open=[];busy=false},850);
+            }
+          }
+        });
+        grid.appendChild(c);
+      });
+      box.appendChild(grid);box.appendChild(after);
+    }
+    else if(g.type==='choice'){
+      var ch=el('div','choices');
+      g.choices.forEach(function(t){
+        var b=el('button',null,t);
+        b.addEventListener('click',function(){
+          verify(k,t).then(function(ok){ if(ok) unlock(k); else {b.classList.add('no');shakeEl(ch);hl.className='hintline err';hl.textContent='아쉬워요, 다른 걸 골라 볼까요?'} });
+        });
+        ch.appendChild(b);
+      });
+      box.appendChild(ch);
+    }
+    else if(g.type==='final'){
+      var bag=el('div','bag'), shown=['잔','우','향','의','리'];
+      var map={우:'boardgame',리:'perfume',의:'dejavu',잔:'dinner',향:'tea'};
+      shown.forEach(function(s){var b=el('b',isOpen(map[s])?'':'no',isOpen(map[s])?s:'?');bag.appendChild(b)});
+      box.appendChild(bag);
+      box.appendChild(answerRow(k,'다섯 글자',wrong));
+    }
+    box.appendChild(hl);
+    return box;
+  }
+
+  function fmtLeft(ms){
+    var m=Math.ceil(ms/60000), d=Math.floor(m/1440), h=Math.floor((m%1440)/60), mm=m%60;
+    if(d>0) return d+'일 '+h+'시간 남았어요';
+    if(h>0) return h+'시간 '+mm+'분 남았어요';
+    return mm+'분 남았어요';
+  }
+  function managerRow(k){
+    var wrap=el('div','mgr'), link=el('button',null,'매니저 코드로 열기'), row=el('div','ansrow mgrbox'),
+        inp=el('input'), btn=el('button',null,'열기');
+    inp.placeholder='매니저 코드'; inp.setAttribute('autocomplete','off');
+    row.appendChild(inp);row.appendChild(btn);
+    link.addEventListener('click',function(){row.classList.add('show');link.style.display='none';inp.focus()});
+    function chk(){ sha(inp.value).then(function(h){ if(h===MASTER) unlock(k); else shakeEl(row) }) }
+    btn.addEventListener('click',chk);
+    inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();chk()}});
+    wrap.appendChild(link);wrap.appendChild(row);
+    return wrap;
+  }
+
+  function paintGate(sec){
+    var k=sec.dataset.gate, g=GATES[k], body=sec.querySelector('.gbody');
+    if(isOpen(k)){sec.classList.remove('locked');return}
+    sec.classList.add('locked');
+    var waiting=g.open && Date.now()<new Date(g.open).getTime();
+    var state=waiting?'wait':'puzzle';
+    if(k==='paper') state='puzzle:'+unlocked.length;
+    if(sec._state===state){
+      if(waiting){var sm=body.querySelector('.wait small'); if(sm) sm.textContent=fmtLeft(new Date(g.open)-Date.now())}
+      return;
+    }
+    sec._state=state; body.innerHTML='';
+    if(waiting){
+      var w=el('div','wait','<div class="lk">🔒</div><p>'+(new Date(g.open).toDateString()===new Date().toDateString()?'':'12월 4일 ')+g.time+'에 열려요</p><small></small>');
+      w.querySelector('small').textContent=fmtLeft(new Date(g.open)-Date.now());
+      body.appendChild(w);
+      body.appendChild(el('p','hintline'));
+    } else {
+      body.appendChild(buildPuzzle(k));
+    }
+    body.appendChild(managerRow(k));
+  }
+
+  slides.forEach(function(sec){
+    var k=sec.dataset.gate; if(!k) return;
+    var g=GATES[k], gate=el('div','in gate'), head='';
+    if(k==='paper') head='<div class="eyebrow">ROLLING PAPER</div><p class="msg">우리의 잔향</p><p class="sub">마지막 코드를 넣으면 다 같이 남긴 감상이 열려요.</p>';
+    else head='<div class="top"><span class="step">'+g.no+'</span></div><div class="time">'+g.time+'</div><div class="lockact">???</div>';
+    gate.innerHTML=head+'<div class="gbody"></div>';
+    sec.insertBefore(gate,sec.firstChild);
+    paintGate(sec);
+  });
+  updateSched();
+  setInterval(function(){
+    slides.forEach(function(sec){ if(sec.dataset.gate&&sec.dataset.gate!=='paper') paintGate(sec) });
+    if(opened) nextBtn.classList.toggle('dim',slides[idx].classList.contains('locked'));
+  },20000);
+  // 롤링페이퍼 글자는 들어갈 때마다 최신으로
+  var _render=render;
+  render=function(){ var p=slides[paperIdx]; if(p.classList.contains('locked')) paintGate(p); _render(); };
 })();
 </script>
 </body>
