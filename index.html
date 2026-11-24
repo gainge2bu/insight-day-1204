@@ -890,7 +890,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     var k=sec.dataset.gate, g=GATES[k], body=sec.querySelector('.gbody');
     if(isOpen(k)){sec.classList.remove('locked');return}
     sec.classList.add('locked');
-    var waiting=g.open && Date.now()<new Date(g.open).getTime();
+    var waiting=false; // 시간 잠금 없이 문제를 바로 보여줌
     var state=waiting?'wait':'puzzle';
     if(k==='paper') state='puzzle:'+unlocked.length;
     if(sec._state===state){
@@ -919,10 +919,6 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     paintGate(sec);
   });
   updateSched();
-  setInterval(function(){
-    slides.forEach(function(sec){ if(sec.dataset.gate&&sec.dataset.gate!=='paper') paintGate(sec) });
-    if(opened) nextBtn.classList.toggle('dim',slides[idx].classList.contains('locked'));
-  },20000);
   // 롤링페이퍼 글자는 들어갈 때마다 최신으로
   var _render=render;
   render=function(){ var p=slides[paperIdx]; if(p.classList.contains('locked')) paintGate(p); _render(); };
