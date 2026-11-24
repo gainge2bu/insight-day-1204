@@ -62,10 +62,10 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
 .uf-bot span{font-size:12px;color:var(--muted);margin-top:10px;letter-spacing:1px}
 .uf-top{bottom:100%;height:100%;border-radius:5px 5px 0 0;border-bottom:1px dashed #E3D9C6;
   transform-origin:50% 100%;transform:rotateX(-180deg);opacity:0;
-  transition:transform .95s cubic-bezier(.3,.7,.2,1),opacity 0s .42s;box-shadow:0 -6px 20px rgba(0,0,0,.12)}
+  transition:transform 1.6s cubic-bezier(.35,.6,.25,1),opacity 0s .6s;box-shadow:0 -6px 20px rgba(0,0,0,.12)}
 .uf-top small,.uf-out small{font-size:10px;letter-spacing:4px;color:var(--red);font-weight:800}
 .uf-top p{font-size:15px;color:#4C5149;margin-top:10px;line-height:1.5}
-.uf-out{inset:0;border-radius:5px;z-index:2;transition:opacity .25s ease}
+.uf-out{inset:0;border-radius:5px;z-index:2;transition:opacity .4s ease}
 .uf-out b{font-size:30px;color:var(--red);margin-top:4px}
 #unfold.unf .uf-top{transform:none;opacity:1}
 #unfold.unf .uf-out{opacity:0}
@@ -649,13 +649,13 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
     // 화면 가운데로 꺼내기 (접힌 선이 화면 정중앙에 오도록)
     void card.offsetWidth;
     card.style.left=(vw-r.width)/2+'px'; card.style.top=(vh/2)+'px';
-    setTimeout(function(){card.classList.add('unf')},650);       // 위쪽 반이 펼쳐짐
+    setTimeout(function(){card.classList.add('unf')},800);       // 위쪽 반이 펼쳐짐 (1.6초)
     setTimeout(function(){                                        // 화면 가득 커지며 카드 화면으로
       var s=Math.max(vw/r.width,vh/(r.height*2))*1.15;
       card.classList.add('grow'); card.style.transform='scale('+s+')';
       showDeck();
-    },1900);
-    setTimeout(function(){card.remove()},2700);
+    },2900);                                                      // 다 펼친 뒤 0.5초 머문 다음
+    setTimeout(function(){card.remove()},3700);
   }
   env.addEventListener('click',openEnvelope);
   env.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openEnvelope()}});
