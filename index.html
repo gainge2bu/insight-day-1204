@@ -4,6 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#173D2E">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta name="app-version" content="2026-11-24-1">
+<script>
+// 예전 버전이 캐시에 남아 있으면 최신 버전으로 자동 교체
+(function(){
+  try{
+    var mine=document.querySelector('meta[name="app-version"]').content;
+    fetch(location.pathname+'?check='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){
+      var m=t.match(/name="app-version" content="([^"]+)"/);
+      if(m&&m[1]!==mine){
+        var q=new URLSearchParams(location.search);
+        if(q.get('v')!==m[1]){q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}
+      }
+    }).catch(function(){});
+  }catch(e){}
+})();
+</script>
 <title>INSIGHT DAY · 잔향</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -289,11 +306,11 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
       <div class="eyebrow">TODAY</div>
       <p class="msg">오늘은 이렇게 보내요</p>
       <div class="sched">
-        <div><span>14:00</span><em data-sched="boardgame">???</em></div>
-        <div><span>16:00</span><em data-sched="perfume">???</em></div>
-        <div><span>17:15</span><em data-sched="dejavu">???</em></div>
-        <div><span>18:00</span><em data-sched="dinner">???</em></div>
-        <div><span>19:15</span><em data-sched="tea">???</em></div>
+        <div><span>14:00</span><em data-sched="boardgame"><span class="redact" style="width:4em"></span></em></div>
+        <div><span>16:00</span><em data-sched="perfume"><span class="redact" style="width:4em"></span></em></div>
+        <div><span>17:15</span><em data-sched="dejavu"><span class="redact" style="width:4em"></span></em></div>
+        <div><span>18:00</span><em data-sched="dinner"><span class="redact" style="width:4em"></span></em></div>
+        <div><span>19:15</span><em data-sched="tea"><span class="redact" style="width:4em"></span></em></div>
       </div>
       <div class="notice">장소는 <b>매니저의 안내</b>에 따라주세요:)</div>
       <p class="sub">하나 끝날 때마다 짧게 감상을 남겨 주세요.<br>마지막에 다 같이 모아서 봐요.</p>
